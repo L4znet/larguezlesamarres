@@ -8,13 +8,6 @@ const Navigation = () => {
      const Stack = createStackNavigator()
      const Tab = createBottomTabNavigator()
 
-     const screens = [
-          {
-               name: "Home",
-               component: HomeScreen,
-          },
-     ]
-
      const Home = () => {
           return (
                <Tab.Navigator
