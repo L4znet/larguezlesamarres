@@ -10,14 +10,14 @@ const TabBar = (props: TabBarProps) => {
           <View style={styles.bottomBar}>
                {props.isAuthenticated && (
                     <>
-                         <TabBarButton label={"Feed"} />
+                         <TabBarButton label={"Feed"} screen={"Home"} />
                     </>
                )}
                {!props.isAuthenticated && (
                     <>
-                         <TabBarButton label={"Connexion"} />
-                         <TabBarButton label={"Inscription"} />
-                         <TabBarButton label={"Feed"} />
+                         <TabBarButton screen={"Login"} label={"Connexion"} />
+                         <TabBarButton screen={"Register"} label={"Inscription"} />
+                         <TabBarButton screen={"Home"} label={"Feed"} />
                     </>
                )}
           </View>
