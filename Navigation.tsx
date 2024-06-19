@@ -5,12 +5,29 @@ import FeedScreen from "./Screens/FeedScreen"
 import TabBar from "./Components/TabBar"
 import LoginScreen from "./Screens/LoginScreen"
 import RegisterScreen from "./Screens/RegisterScreen"
+import ProfileScreen from "./Screens/ProfileScreen"
+import { Session } from "@supabase/supabase-js"
+import { useEffect, useState } from "react"
 
-const Navigation = () => {
+type NavigationProps = {
+     session: Session | null
+}
+
+const Navigation = (props: NavigationProps) => {
      const Stack = createStackNavigator()
      const Tab = createBottomTabNavigator()
 
-     const Home = () => {
+     const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+     useEffect(() => {
+          if (props.session) {
+               setIsAuthenticated(true)
+          } else {
+               setIsAuthenticated(false)
+          }
+     }, [props.session])
+
+     const Home = (props: NavigationProps) => {
           return (
                <Tab.Navigator
                     screenOptions={{
@@ -22,9 +39,10 @@ const Navigation = () => {
                               fontWeight: "bold",
                          },
                     }}
-                    tabBar={(props) => <TabBar isAuthenticated={false} />}
+                    tabBar={(props) => <TabBar isAuthenticated={isAuthenticated} />}
                >
                     <Tab.Screen name="Feed" component={FeedScreen} />
+                    <Tab.Screen name="Profile">{() => <ProfileScreen session={props.session} />}</Tab.Screen>
                </Tab.Navigator>
           )
      }
@@ -42,7 +60,9 @@ const Navigation = () => {
                     headerBackTitle: "Retour",
                }}
           >
-               <Stack.Screen name="Home" component={Home} options={{ headerShown: false, headerTitle: "Feed" }} />
+               <Stack.Screen name="Home" options={{ headerShown: false, headerTitle: "Feed" }}>
+                    {() => <Home session={props.session} />}
+               </Stack.Screen>
                <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Connexion" }} />
                <Stack.Screen name="Register" component={RegisterScreen} options={{ headerTitle: "Inscription" }} />
           </Stack.Navigator>
