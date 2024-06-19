@@ -1,25 +1,48 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
+import { supabase } from "../lib/supabase"
 
 type TabBarButtonProps = {
-     label: keyof IconKeys
-     screen: string
+     label: string
+     screen?: string
+     method?: () => void
+     icon: keyof IconKeys
 }
 
 type IconKeys = {
      Feed: string
-     Connexion: string
-     Inscription: string
+     Login: string
+     Register: string
+     Profile: string
+     Logout: string
 }
 
 const icons = {
      Feed: "house",
-     Connexion: "user",
-     Inscription: "user-plus",
+     Login: "user",
+     Register: "user-plus",
+     Profile: "user-circle",
+     Logout: "user-slash",
 }
 
 const TabBarButton = (props: TabBarButtonProps) => {
+     if (props.icon == "Logout") {
+          return (
+               <TouchableOpacity
+                    {...props}
+                    style={styles.tabBarButton}
+                    onPress={async () => {
+                         const { error } = await supabase.auth.signOut()
+                         RootNavigation.navigate("Feed", "")
+                    }}
+               >
+                    <Icon name={icons[props.icon]} size={25} color="#fff" />
+                    <Text style={styles.tabBarButtonText}>Déconnexion</Text>
+               </TouchableOpacity>
+          )
+     }
+
      return (
           <TouchableOpacity
                {...props}
@@ -28,7 +51,7 @@ const TabBarButton = (props: TabBarButtonProps) => {
                     RootNavigation.navigate(props.screen, "")
                }}
           >
-               <Icon name={icons[props.label]} size={25} color="#fff" />
+               <Icon name={icons[props.icon]} size={25} color="#fff" />
                <Text style={styles.tabBarButtonText}>{props.label}</Text>
           </TouchableOpacity>
      )
