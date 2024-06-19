@@ -1,10 +1,31 @@
 import { TextInput, StyleSheet } from "react-native"
 type InputProps = {
      placeholder: string
+     onChangeText: (text: string) => void
+     value: string
+     type?: string
 }
 
 const Input = (props: InputProps) => {
-     return <TextInput style={styles.input} placeholder={props.placeholder} />
+     switch (props.type) {
+          case "email":
+               return <TextInput keyboardType={"email-address"} onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
+
+          case "password":
+               return <TextInput secureTextEntry onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
+
+          case "number":
+               return <TextInput keyboardType={"number-pad"} onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
+
+          case "phone":
+               return <TextInput keyboardType={"phone-pad"} onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
+
+          case "url":
+               return <TextInput keyboardType={"url"} onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
+
+          default:
+               return <TextInput onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
+     }
 }
 
 const styles = StyleSheet.create({
