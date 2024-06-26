@@ -10,7 +10,7 @@ type TopTabBarButtonProps = {
 }
 
 const TabBarButton = (props: TopTabBarButtonProps) => {
-     const jumpToAction = TabActions.jumpTo(screen)
+     const jumpToAction = TabActions.jumpTo(props.screen)
 
      const currentRouteName = navigationRef.current?.getCurrentRoute()?.name
      return (
