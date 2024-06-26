@@ -2,7 +2,7 @@ import { Animated, SafeAreaView, StyleSheet, View } from "react-native"
 import Card from "../Components/Card"
 import ScrollView = Animated.ScrollView
 
-const OwnoffersScreen = () => {
+const FeedOffersScreen = () => {
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
      },
 })
 
-export default OwnoffersScreen
+export default FeedOffersScreen

@@ -48,6 +48,7 @@ const TabBarButton = (props: TabBarButtonProps) => {
                {...props}
                style={styles.tabBarButton}
                onPress={() => {
+                    console.log(props.screen)
                     RootNavigation.navigate(props.screen, "")
                }}
           >

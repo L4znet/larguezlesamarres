@@ -1,28 +1,30 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import FeedOffersScreen from "./FeedOffersScreen"
-import OwnoffersScreen from "./OwnoffersScreen"
+import OwnOffersScreen from "./OwnOffersScreen"
+import { useEffect, useState } from "react"
+import { Session } from "@supabase/supabase-js"
+import TopTabBar from "../Components/TopTabBar"
 
-const FeedScreen = () => {
+interface FeedScreenProps {
+     isAuthenticated: boolean
+     session: Session | null
+}
+
+const FeedScreen = (props: FeedScreenProps) => {
      const Tab = createMaterialTopTabNavigator()
 
-     return (
-          <Tab.Navigator
-               screenOptions={{
-                    tabBarActiveTintColor: "#fd5353",
-                    tabBarInactiveTintColor: "#000",
+     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-                    tabBarStyle: {
-                         backgroundColor: "#fff",
-                    },
-                    tabBarLabelStyle: {
-                         fontSize: 14,
-                         fontWeight: "bold",
-                    },
-                    tabBarIndicatorStyle: {
-                         backgroundColor: "#fd5353",
-                    },
-               }}
-          >
+     useEffect(() => {
+          if (props.session) {
+               setIsAuthenticated(true)
+          } else {
+               setIsAuthenticated(false)
+          }
+     }, [props.session])
+
+     return (
+          <Tab.Navigator tabBar={(props) => <TopTabBar isAuthenticated={isAuthenticated} />}>
                <Tab.Screen
                     options={{
                          title: "Les offres du feed",
@@ -38,7 +40,7 @@ const FeedScreen = () => {
                          title: "Vos offres",
                     }}
                     name="OwnOffers"
-                    component={OwnoffersScreen}
+                    component={OwnOffersScreen}
                />
           </Tab.Navigator>
      )

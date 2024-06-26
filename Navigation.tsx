@@ -1,4 +1,3 @@
-import HomeScreen from "./Screens/HomeScreen"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import FeedScreen from "./Screens/FeedScreen"
@@ -18,6 +17,8 @@ const Navigation = (props: NavigationProps) => {
      const Tab = createBottomTabNavigator()
 
      const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+     console.log(isAuthenticated)
 
      useEffect(() => {
           if (props.session) {
@@ -41,7 +42,7 @@ const Navigation = (props: NavigationProps) => {
                     }}
                     tabBar={(props) => <TabBar isAuthenticated={isAuthenticated} />}
                >
-                    <Tab.Screen name="Feed" component={FeedScreen} />
+                    <Tab.Screen name="Feed">{() => <FeedScreen session={props.session} />}</Tab.Screen>
                     <Tab.Screen name="Profile">{() => <ProfileScreen session={props.session} />}</Tab.Screen>
                </Tab.Navigator>
           )
