@@ -1,38 +1,47 @@
-import { View, Text, SafeAreaView, Animated, StyleSheet } from "react-native"
-import ScrollView = Animated.ScrollView
-import Card from "../Components/Card"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+import FeedOffersScreen from "./FeedOffersScreen"
+import OwnoffersScreen from "./OwnoffersScreen"
 
 const FeedScreen = () => {
+     const Tab = createMaterialTopTabNavigator()
+
      return (
-          <SafeAreaView style={styles.container}>
-               <ScrollView style={styles.scrollView}>
-                    <View style={styles.feed}>
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                    </View>
-               </ScrollView>
-          </SafeAreaView>
+          <Tab.Navigator
+               screenOptions={{
+                    tabBarActiveTintColor: "#fd5353",
+                    tabBarInactiveTintColor: "#000",
+
+                    tabBarStyle: {
+                         backgroundColor: "#fff",
+                    },
+                    tabBarLabelStyle: {
+                         fontSize: 14,
+                         fontWeight: "bold",
+                    },
+                    tabBarIndicatorStyle: {
+                         backgroundColor: "#fd5353",
+                    },
+               }}
+          >
+               <Tab.Screen
+                    options={{
+                         title: "Les offres du feed",
+                         tabBarItemStyle: {
+                              height: "100%",
+                         },
+                    }}
+                    name="FeedOffers"
+                    component={FeedOffersScreen}
+               />
+               <Tab.Screen
+                    options={{
+                         title: "Vos offres",
+                    }}
+                    name="OwnOffers"
+                    component={OwnoffersScreen}
+               />
+          </Tab.Navigator>
      )
 }
-
-const styles = StyleSheet.create({
-     container: {
-          flex: 1,
-          alignItems: "center",
-          width: "100%",
-     },
-
-     scrollView: {
-          flex: 1,
-          width: "100%",
-     },
-
-     feed: {
-          alignItems: "center",
-     },
-})
 
 export default FeedScreen
