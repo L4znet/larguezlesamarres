@@ -7,11 +7,11 @@ const FeedOffersScreen = () => {
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
                     <View style={styles.feed}>
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <Card id="1" title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <Card id="2" title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <Card id="3" title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <Card id="4" title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <Card id="5" title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                     </View>
                </ScrollView>
           </SafeAreaView>

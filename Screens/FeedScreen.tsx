@@ -6,7 +6,6 @@ import { Session } from "@supabase/supabase-js"
 import TopTabBar from "../Components/TopTabBar"
 
 interface FeedScreenProps {
-     isAuthenticated: boolean
      session: Session | null
 }
 
