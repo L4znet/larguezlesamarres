@@ -8,8 +8,8 @@ import ProfileScreen from "./Screens/ProfileScreen"
 import { Session } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
 import OfferScreen from "./Screens/OfferScreen"
-import { ParamListBase, RouteProp } from "@react-navigation/native"
-import OfferModalScreen from "./Screens/OfferModalScreen"
+import { ParamListBase } from "@react-navigation/native"
+import AddOfferScreen from "./Screens/AddOfferScreen"
 
 type NavigationProps = {
      session: Session | null
@@ -71,6 +71,7 @@ const Navigation = (props: NavigationProps) => {
                </Stack.Screen>
                <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Connexion" }} />
                <Stack.Screen name="Register" component={RegisterScreen} options={{ headerTitle: "Inscription" }} />
+               <Stack.Screen name="AddOffer" component={AddOfferScreen} options={{ headerTitle: "Inscription" }} />
                <Stack.Screen name="Offer" options={{ headerTitle: "Présentation de l'offre" }}>
                     {({ route }) => <OfferScreen id={(route.params as { id: string }).id} />}
                </Stack.Screen>

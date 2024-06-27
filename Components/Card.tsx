@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Pressable, TouchableHighlight, TouchableOpacity } from "react-native"
+import { Text, StyleSheet, Image, TouchableOpacity } from "react-native"
 
 import * as RootNavigation from "../RootNavigation"
 

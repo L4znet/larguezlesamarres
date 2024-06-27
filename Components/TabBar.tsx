@@ -13,6 +13,7 @@ const TabBar = (props: TabBarProps) => {
                     <>
                          <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Profile"} screen={"Profile"} label={"Profile"} />
+                         <TabBarButton icon={"Add"} screen={"AddOffer"} label={"Ajouter"} />
                          <TabBarButton icon={"Logout"} label={"Déconnexion"} />
                     </>
                )}

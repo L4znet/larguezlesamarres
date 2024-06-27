@@ -1,6 +1,7 @@
-import { Animated, SafeAreaView, StyleSheet, View } from "react-native"
+import { Animated, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native"
 import Card from "../Components/Card"
 import ScrollView = Animated.ScrollView
+import Icon from "react-native-vector-icons/FontAwesome6"
 
 const FeedOffersScreen = () => {
      return (
@@ -14,6 +15,9 @@ const FeedOffersScreen = () => {
                          <Card id="5" title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                     </View>
                </ScrollView>
+               <TouchableOpacity style={styles.addOfferButton}>
+                    <Icon name={"plus"} size={20} color="#fff" />
+               </TouchableOpacity>
           </SafeAreaView>
      )
 }
@@ -31,6 +35,25 @@ const styles = StyleSheet.create({
      },
 
      feed: {
+          alignItems: "center",
+     },
+     addOfferButton: {
+          width: 70,
+          height: 70,
+          borderRadius: 40,
+          backgroundColor: "#fd5353",
+          right: 20,
+          bottom: 20,
+          shadowColor: "#000",
+          shadowOffset: {
+               width: 0,
+               height: 2,
+          },
+          shadowOpacity: 0.23,
+          shadowRadius: 2.62,
+          elevation: 4,
+          position: "absolute",
+          justifyContent: "center",
           alignItems: "center",
      },
 })
