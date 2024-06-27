@@ -9,6 +9,7 @@ import { Session } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
 import OfferScreen from "./Screens/OfferScreen"
 import { ParamListBase, RouteProp } from "@react-navigation/native"
+import OfferModalScreen from "./Screens/OfferModalScreen"
 
 type NavigationProps = {
      session: Session | null

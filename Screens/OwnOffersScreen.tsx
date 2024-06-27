@@ -1,17 +1,18 @@
 import { Animated, SafeAreaView, StyleSheet, View } from "react-native"
 import Card from "../Components/Card"
 import ScrollView = Animated.ScrollView
+import OwnOfferCard from "../Components/OwnOfferCard"
 
 const OwnOffersScreen = () => {
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
                     <View style={styles.feed}>
-                         <Card title={"aaaa Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"aaaa Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"aaaa Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"aaaa Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card title={"aaaa Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <OwnOfferCard id="1" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <OwnOfferCard id="2" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <OwnOfferCard id="3" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <OwnOfferCard id="4" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         <OwnOfferCard id="5" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                     </View>
                </ScrollView>
           </SafeAreaView>

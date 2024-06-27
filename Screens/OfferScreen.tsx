@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image } from "react-native"
+import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView } from "react-native"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import Icon from "react-native-vector-icons/FontAwesome6"
 
 type RootStackParamList = {
      id: string
@@ -40,47 +41,119 @@ const OfferScreen = (props: RootStackParamList) => {
                image: require("../assets/images/bateau.jpg"),
           },
      ]
+
      const offer = data.find((item: Offer) => item.id === props.id)
 
      if (!offer) {
           return <Text>Offer not found</Text>
      }
 
+     // Here we define the answers for the questions about the offer
+     const { isSkipperAvailable, isTeamAvailable } = {
+          isSkipperAvailable: 1,
+          isTeamAvailable: 0,
+     }
+
      const { title, image } = offer
      return (
-          <View style={styles.card}>
-               <Image source={image} style={styles.image} resizeMode={"cover"} />
-               <Text style={styles.title}>{title}</Text>
-          </View>
+          <SafeAreaView>
+               <ScrollView style={styles.offer}>
+                    <View>
+                         <Text style={styles.title}>{title}</Text>
+                         <Image source={image} style={styles.image} resizeMode={"cover"} />
+                         <View style={styles.subDetails}>
+                              <Icon name={"location-dot"} size={20} color="#fff" />
+                              <Text style={styles.subDetailsText}>Nantes </Text>
+                         </View>
+                         <View style={styles.description}>
+                              <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci at consectetur consequatur consequuntur distinctio dolorem excepturi inventore iure magnam magni, maiores, nam odio padipisicing elit. Ad adip</Text>
+                         </View>
+                         <View style={styles.question}>
+                              <Text style={styles.questionTitle}>Proposez-vous un skipper avec ce véhicule ?</Text>
+                              <View style={[styles.questionAnswer, isSkipperAvailable ? styles.questionAnswerYes : styles.questionAnswerNo]}>
+                                   <Text style={styles.questionAnswerText}>{isSkipperAvailable ? "Oui" : "Non"}</Text>
+                              </View>
+                         </View>
+                         <View style={styles.question}>
+                              <Text style={styles.questionTitle}>Avez-vous un équipage avec ce véhicule ?</Text>
+                              <View style={[styles.questionAnswer, isTeamAvailable ? styles.questionAnswerYes : styles.questionAnswerNo]}>
+                                   <Text style={styles.questionAnswerText}>{isTeamAvailable ? "Oui" : "Non"}</Text>
+                              </View>
+                         </View>
+                    </View>
+               </ScrollView>
+          </SafeAreaView>
      )
 }
 
 const styles = StyleSheet.create({
-     card: {
-          backgroundColor: "#f9f9f9",
-          width: "90%",
-          marginVertical: 10,
-          borderRadius: 10,
-          shadowColor: "#000",
-          shadowOffset: {
-               width: 0,
-               height: 2,
-          },
-          shadowOpacity: 0.23,
-          shadowRadius: 2.62,
-          elevation: 4,
-          marginTop: 20,
+     offer: {
+          backgroundColor: "#efefef",
+          width: "100%",
+          height: "100%",
+          color: "#000",
      },
      title: {
-          fontSize: 20,
+          fontSize: 25,
           fontWeight: "bold",
-          marginVertical: 20,
-          textAlign: "center",
+          padding: 20,
+          backgroundColor: "#FFF",
+          width: "100%",
      },
      image: {
           width: "100%",
           height: 200,
-          borderRadius: 10,
+     },
+     subDetails: {
+          backgroundColor: "#fd5353",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          paddingLeft: 20,
+     },
+     subDetailsText: {
+          fontSize: 15,
+          fontWeight: "bold",
+          padding: 15,
+          color: "#fff",
+     },
+     description: {
+          padding: 20,
+          backgroundColor: "#FFF",
+          maxHeight: "40%",
+          minHeight: "5%",
+     },
+     descriptionText: {
+          fontSize: 15,
+          color: "#000",
+     },
+     question: {
+          padding: 20,
+          backgroundColor: "#FFF",
+     },
+     questionTitle: {
+          fontSize: 15,
+          color: "#000",
+          marginBottom: 10,
+          fontWeight: "bold",
+     },
+     questionAnswer: {
+          backgroundColor: "#fd5353",
+          padding: 10,
+          width: "20%",
+          borderRadius: 5,
+     },
+     questionAnswerText: {
+          color: "#fff",
+          fontWeight: "bold",
+          width: "100%",
+          textAlign: "center",
+     },
+     questionAnswerYes: {
+          backgroundColor: "#2ecc71",
+     },
+     questionAnswerNo: {
+          backgroundColor: "#e74c3c",
      },
 })
 
