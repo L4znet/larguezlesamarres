@@ -3,10 +3,16 @@ import Input from "../Components/Input"
 import Button from "../Components/Button"
 import Link from "../Components/Link"
 import ScrollView = Animated.ScrollView
+import { useState } from "react"
 
 type RegisterScreenProps = {}
 
 const RegisterScreen = (props: RegisterScreenProps) => {
+     const [lastname, setLastname] = useState("")
+     const [firstname, setFirstname] = useState("")
+     const [email, setEmail] = useState("")
+     const [password, setPassword] = useState("")
+
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
@@ -16,10 +22,10 @@ const RegisterScreen = (props: RegisterScreenProps) => {
                               <Text style={styles.h2}>Inscrivez-vous</Text>
                          </View>
 
-                         <Input placeholder={"Nom"} />
-                         <Input placeholder={"Prénom"} />
-                         <Input placeholder={"E-mail"} />
-                         <Input placeholder={"Mot de passe"} />
+                         <Input value={lastname} onChangeText={(lastname) => setLastname(lastname)} placeholder={"Nom"} />
+                         <Input value={firstname} onChangeText={(firstname) => setFirstname(firstname)} placeholder={"Prénom"} />
+                         <Input value={email} onChangeText={(email) => setEmail(email)} placeholder={"E-mail"} />
+                         <Input value={password} onChangeText={(password) => setPassword(email)} placeholder={"Mot de passe"} />
                          <Button
                               label={"Inscription"}
                               method={() => {
