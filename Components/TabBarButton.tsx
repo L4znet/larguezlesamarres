@@ -16,6 +16,7 @@ type IconKeys = {
      Register: string
      Profile: string
      Logout: string
+     Add: string
 }
 
 const icons = {
@@ -24,6 +25,7 @@ const icons = {
      Register: "user-plus",
      Profile: "user-circle",
      Logout: "user-slash",
+     Add: "plus",
 }
 
 const TabBarButton = (props: TabBarButtonProps) => {

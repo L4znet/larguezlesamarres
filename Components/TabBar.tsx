@@ -11,14 +11,15 @@ const TabBar = (props: TabBarProps) => {
           <View style={styles.bottomBar}>
                {props.isAuthenticated && (
                     <>
-                         <TabBarButton icon={"Feed"} label={"Feed"} screen={"Home"} />
+                         <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Profile"} screen={"Profile"} label={"Profile"} />
+                         <TabBarButton icon={"Add"} screen={"AddOffer"} label={"Ajouter"} />
                          <TabBarButton icon={"Logout"} label={"Déconnexion"} />
                     </>
                )}
                {!props.isAuthenticated && (
                     <>
-                         <TabBarButton icon={"Feed"} label={"Feed"} screen={"Home"} />
+                         <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Login"} screen={"Login"} label={"Connexion"} />
                          <TabBarButton icon={"Register"} screen={"Register"} label={"Inscription"} />
                     </>

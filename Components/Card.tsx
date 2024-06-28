@@ -1,17 +1,24 @@
-import { View, Text, StyleSheet, Image } from "react-native"
+import { Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+
+import * as RootNavigation from "../RootNavigation"
 
 type CardProps = {
+     id: string
      title: string
      description: string
      image: any
 }
 
 const Card = (props: CardProps) => {
+     const goToOffer = (id: string) => {
+          RootNavigation.navigate("Offer", { id: id, title: props.title })
+     }
+
      return (
-          <View style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={() => goToOffer(props.id)}>
                <Image source={props.image} style={styles.image} resizeMode={"cover"} />
                <Text style={styles.title}>{props.title}</Text>
-          </View>
+          </TouchableOpacity>
      )
 }
 

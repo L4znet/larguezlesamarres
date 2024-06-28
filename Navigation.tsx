@@ -1,5 +1,4 @@
-import HomeScreen from "./Screens/HomeScreen"
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import FeedScreen from "./Screens/FeedScreen"
 import TabBar from "./Components/TabBar"
@@ -8,9 +7,16 @@ import RegisterScreen from "./Screens/RegisterScreen"
 import ProfileScreen from "./Screens/ProfileScreen"
 import { Session } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
+import OfferScreen from "./Screens/OfferScreen"
+import { ParamListBase } from "@react-navigation/native"
+import AddOfferScreen from "./Screens/AddOfferScreen"
 
 type NavigationProps = {
      session: Session | null
+}
+
+type Props = {
+     navigation: StackNavigationProp<ParamListBase>
 }
 
 const Navigation = (props: NavigationProps) => {
@@ -39,9 +45,9 @@ const Navigation = (props: NavigationProps) => {
                               fontWeight: "bold",
                          },
                     }}
-                    tabBar={(props) => <TabBar isAuthenticated={isAuthenticated} />}
+                    tabBar={() => <TabBar isAuthenticated={isAuthenticated} />}
                >
-                    <Tab.Screen name="Feed" component={FeedScreen} />
+                    <Tab.Screen name="Feed">{() => <FeedScreen session={props.session} />}</Tab.Screen>
                     <Tab.Screen name="Profile">{() => <ProfileScreen session={props.session} />}</Tab.Screen>
                </Tab.Navigator>
           )
@@ -65,6 +71,10 @@ const Navigation = (props: NavigationProps) => {
                </Stack.Screen>
                <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Connexion" }} />
                <Stack.Screen name="Register" component={RegisterScreen} options={{ headerTitle: "Inscription" }} />
+               <Stack.Screen name="AddOffer" component={AddOfferScreen} options={{ headerTitle: "Ajouter une offre" }} />
+               <Stack.Screen name="Offer" options={{ headerTitle: "Présentation de l'offre" }}>
+                    {({ route }) => <OfferScreen id={(route.params as { id: string }).id} />}
+               </Stack.Screen>
           </Stack.Navigator>
      )
 }
