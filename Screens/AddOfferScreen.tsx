@@ -3,6 +3,9 @@ import Input from "../Components/Input"
 import Button from "../Components/Button"
 import Link from "../Components/Link"
 import { useState } from "react"
+import * as ImagePicker from "expo-image-picker"
+import { Pressable } from "react-native"
+import ImagePickerScreen from "../Components/ImagePicker"
 
 const AddOfferScreen = () => {
      const [title, setTitle] = useState("")
@@ -12,9 +15,8 @@ const AddOfferScreen = () => {
      return (
           <View style={styles.container}>
                <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
-               <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
-               <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
-               <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
+
+               <ImagePickerScreen />
                <Button label={"Ajouter l'annonce"} method={async () => {}} />
           </View>
      )
