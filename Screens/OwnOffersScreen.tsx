@@ -3,8 +3,13 @@ import ScrollView = Animated.ScrollView
 import OwnOfferCard from "../Components/OwnOfferCard"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
+import CircleButton from "../Components/CircleButton"
 
 const OwnOffersScreen = () => {
+     const openAddOfferScreen = () => {
+          console.log("openAddOfferScreen")
+          RootNavigation.navigate("AddOffer", "")
+     }
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
@@ -16,9 +21,7 @@ const OwnOffersScreen = () => {
                          <OwnOfferCard id="5" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                     </View>
                </ScrollView>
-               <TouchableOpacity style={styles.addOfferButton} onPress={() => RootNavigation.navigate("AddOffer", "")}>
-                    <Icon name={"plus"} size={20} color="#fff" />
-               </TouchableOpacity>
+               <CircleButton method={openAddOfferScreen} />
           </SafeAreaView>
      )
 }
