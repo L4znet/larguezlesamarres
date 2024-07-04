@@ -1,9 +1,9 @@
 import { Animated, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native"
 import ScrollView = Animated.ScrollView
-import OwnOfferCard from "../Components/OwnOfferCard"
+import OwnOfferCard from "../components/OwnOfferCard"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
-import CircleButton from "../Components/CircleButton"
+import CircleButton from "../components/CircleButton"
 
 const OwnOffersScreen = () => {
      const openAddOfferScreen = () => {

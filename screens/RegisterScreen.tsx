@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, SafeAreaView, Animated } from "react-native"
-import Input from "../Components/Input"
-import Button from "../Components/Button"
-import Link from "../Components/Link"
+import Input from "../components/Input"
+import Button from "../components/Button"
+import Link from "../components/Link"
 import ScrollView = Animated.ScrollView
 import { useState } from "react"
 

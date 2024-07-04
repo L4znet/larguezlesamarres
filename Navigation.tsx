@@ -1,15 +1,15 @@
 import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import FeedScreen from "./Screens/FeedScreen"
-import TabBar from "./Components/TabBar"
-import LoginScreen from "./Screens/LoginScreen"
-import RegisterScreen from "./Screens/RegisterScreen"
-import ProfileScreen from "./Screens/ProfileScreen"
+import FeedScreen from "./screens/FeedScreen"
+import TabBar from "./components/TabBar"
+import LoginScreen from "./screens/LoginScreen"
+import RegisterScreen from "./screens/RegisterScreen"
+import ProfileScreen from "./screens/ProfileScreen"
 import { Session } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
-import OfferScreen from "./Screens/OfferScreen"
+import OfferScreen from "./screens/OfferScreen"
 import { ParamListBase } from "@react-navigation/native"
-import AddOfferScreen from "./Screens/AddOfferScreen"
+import AddOfferScreen from "./screens/AddOfferScreen"
 
 type NavigationProps = {
      session: Session | null

@@ -5,8 +5,6 @@ import { TabActions } from "@react-navigation/native"
 type TopTabBarButtonProps = {
      label: string
      screen: string
-     index: number
-     currentTabIndex: number
 }
 
 const TabBarButton = (props: TopTabBarButtonProps) => {

@@ -3,7 +3,7 @@ import FeedOffersScreen from "./FeedOffersScreen"
 import OwnOffersScreen from "./OwnOffersScreen"
 import { useEffect, useState } from "react"
 import { Session } from "@supabase/supabase-js"
-import TopTabBar from "../Components/TopTabBar"
+import TopTabBar from "../components/TopTabBar"
 
 interface FeedScreenProps {
      session: Session | null

@@ -1,7 +1,7 @@
 import { Animated, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native"
-import Card from "../Components/Card"
+import Card from "../components/Card"
 import ScrollView = Animated.ScrollView
-import CircleButton from "../Components/CircleButton"
+import CircleButton from "../components/CircleButton"
 import * as RootNavigation from "../RootNavigation"
 
 const FeedOffersScreen = () => {
