@@ -1,6 +1,8 @@
-import { Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { Text, StyleSheet, Image, TouchableOpacity, View } from "react-native"
 
 import * as RootNavigation from "../RootNavigation"
+import Icon from "react-native-vector-icons/FontAwesome6"
+import FavoriteButton from "./FavoriteButton"
 
 type CardProps = {
      id: string
@@ -16,7 +18,11 @@ const Card = (props: CardProps) => {
 
      return (
           <TouchableOpacity style={styles.card} onPress={() => goToOffer(props.id)}>
-               <Image source={props.image} style={styles.image} resizeMode={"cover"} />
+               <View style={styles.cardHeader}>
+                    <Image source={props.image} style={styles.image} resizeMode={"cover"} />
+                    <FavoriteButton offerId={1} />
+               </View>
+
                <Text style={styles.title}>{props.title}</Text>
           </TouchableOpacity>
      )
@@ -38,6 +44,13 @@ const styles = StyleSheet.create({
           elevation: 4,
           marginTop: 20,
      },
+     cardHeader: {
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+          overflow: "hidden",
+          position: "relative",
+     },
+
      title: {
           fontSize: 20,
           fontWeight: "bold",
