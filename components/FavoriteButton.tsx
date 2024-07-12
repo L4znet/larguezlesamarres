@@ -1,15 +1,42 @@
 import { View, StyleSheet, Pressable } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Session } from "@supabase/supabase-js"
+import { supabase } from "../lib/supabase"
+import { PrismaClient } from "@prisma/client"
 type FavoriteButtonProps = {
-     offerId: number
+     offerId: string
 }
 const FavoriteButton = (props: FavoriteButtonProps) => {
      const [isFavorite, setIsFavorite] = useState(false)
+     const [session, setSession] = useState<Session | null>(null)
+     useEffect(() => {
+          const fetchSession = async () => {
+               const {
+                    data: { session },
+               } = await supabase.auth.getSession()
+               setSession(session)
+          }
 
-     const addFavorite = () => {
-          console.log("Offer " + props.offerId + " is added to favorites")
+          fetchSession()
+     }, [])
+     const prisma = new PrismaClient()
+
+     const addFavorite = async () => {
           setIsFavorite(!isFavorite)
+
+          const dataToInsert = {
+               offerid: props.offerId,
+               userid: session?.user.id,
+          }
+
+          if (isFavorite) {
+               await supabase.from("favorites").delete().match(dataToInsert)
+          } else {
+               const test = await supabase.from("favorites").insert(dataToInsert)
+
+               console.log(test)
+          }
      }
 
      return (

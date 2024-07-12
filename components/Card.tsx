@@ -20,7 +20,7 @@ const Card = (props: CardProps) => {
           <TouchableOpacity style={styles.card} onPress={() => goToOffer(props.id)}>
                <View style={styles.cardHeader}>
                     <Image source={props.image} style={styles.image} resizeMode={"cover"} />
-                    <FavoriteButton offerId={1} />
+                    <FavoriteButton offerId={props.id} />
                </View>
 
                <Text style={styles.title}>{props.title}</Text>
