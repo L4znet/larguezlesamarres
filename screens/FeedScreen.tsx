@@ -4,6 +4,8 @@ import OwnOffersScreen from "./OwnOffersScreen"
 import { useEffect, useState } from "react"
 import { Session } from "@supabase/supabase-js"
 import TopTabBar from "../components/TopTabBar"
+import FavoriteCard from "../components/FavoriteCard"
+import OwnFavoritesScreen from "./OwnFavoritesScreen"
 
 interface FeedScreenProps {
      session: Session | null
@@ -40,6 +42,13 @@ const FeedScreen = (props: FeedScreenProps) => {
                     }}
                     name="OwnOffers"
                     component={OwnOffersScreen}
+               />
+               <Tab.Screen
+                    options={{
+                         title: "Vos favoris",
+                    }}
+                    name="OwnFavorites"
+                    component={OwnFavoritesScreen}
                />
           </Tab.Navigator>
      )
