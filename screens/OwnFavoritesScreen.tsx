@@ -25,10 +25,7 @@ const OwnFavoritesScreen = () => {
      }, [favorites])
 
      const getFavorites = async () => {
-          // select * from favorites where user_id = session.user.id, and join with offers
-          // join
-
-          const { data, error } = await supabase.from("favorites").select("*").eq("user_id", session).join("offers", { "favorites.offer_id": "offers.id" })
+          const { data, error } = await supabase.from("favorites").select("favorites.*, offers.*").eq("favorites.userid", session).on("favorites.offerid", "offers.id")
 
           if (error) {
                console.log(error)
@@ -37,14 +34,15 @@ const OwnFavoritesScreen = () => {
           }
 
           setFavorites(data)
-          console.log(data)
      }
 
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
                     <View style={styles.feed}>
-                         <FavoriteCard id="1" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         {favorites.map((favorite) => {
+                              return <FavoriteCard key={favorite.id} id={favorite.id} title={favorite.title} description={favorite.description} image={favorite.image} />
+                         })}
                     </View>
                </ScrollView>
                <CircleButton method={openAddOfferScreen} />
