@@ -6,21 +6,17 @@ import DeleteConfirmModal from "./DeleteConfirmModal"
 type CardProps = {
      id: string
      title: string
-     description: string
      image: any
+     description: string
 }
 
 const FavoriteCard = (props: CardProps) => {
-     const [modalVisible, setModalVisible] = useState(false)
-     const [modalDeleteConfirmVisible, setModalDeleteConfirmVisible] = useState(false)
-     const [modalDeleteVisible, setModalDeleteVisible] = useState(false)
+     const picture = props.image === null ? require("../assets/images/placeholder.png") : props.image
 
      return (
           <>
-               <OfferDetailModal id={props.id} deleteVisible={() => setModalDeleteVisible(true)} show={modalVisible} close={() => setModalVisible(false)} />
-               <DeleteConfirmModal id={props.id} show={modalDeleteVisible} close={() => setModalDeleteVisible(false)} />
-               <TouchableOpacity style={styles.card} onPress={() => setModalVisible(true)}>
-                    <Image source={props.image} style={styles.image} resizeMode={"cover"} />
+               <TouchableOpacity style={styles.card}>
+                    <Image source={picture} style={styles.image} resizeMode={"cover"} />
                     <Text style={styles.title}>{props.title}</Text>
                </TouchableOpacity>
           </>

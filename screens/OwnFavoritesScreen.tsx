@@ -1,10 +1,10 @@
-import { Animated, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Animated, RefreshControl, SafeAreaView, StyleSheet, View } from "react-native"
 import ScrollView = Animated.ScrollView
 import * as RootNavigation from "../RootNavigation"
 import CircleButton from "../components/CircleButton"
 import FavoriteCard from "../components/FavoriteCard"
 import { supabase } from "../lib/supabase"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const OwnFavoritesScreen = () => {
      const openAddOfferScreen = () => {
@@ -12,37 +12,64 @@ const OwnFavoritesScreen = () => {
           RootNavigation.navigate("AddOffer", "")
      }
 
-     const [favorites, setFavorites] = useState([])
+     type Offer = {
+          id: string
+          title: string
+          description: string
+          image: string
+     }
+
+     type Favorite = {
+          offerid: string
+          userid: string
+          offers: Offer
+     }
+
+     const [favorites, setFavorites] = useState<Favorite[]>([])
      const [loading, setLoading] = useState(true)
-     const [session, setSession] = useState(null)
+     const [session, setSession] = useState<string | null>(null)
 
      supabase.auth.getSession().then(({ data: { session } }) => {
-          setSession(session?.user.id)
+          setSession(session?.user.id ?? null)
      })
 
      useEffect(() => {
           getFavorites()
      }, [favorites])
 
+     const [refreshing, setRefreshing] = useState(false)
+
+     const onRefresh = useCallback(async () => {
+          setRefreshing(true)
+          await getFavorites()
+          setRefreshing(false)
+     }, [])
+
      const getFavorites = async () => {
-          const { data, error } = await supabase.from("favorites").select("favorites.*, offers.*").eq("favorites.userid", session).on("favorites.offerid", "offers.id")
+          // select * from favorites where userid = session?.user.id and join offers on favorites.offerid = offers.id
 
-          if (error) {
-               console.log(error)
-               console.error("Error fetching favorites")
-               return
-          }
+          supabase
+               .from("favorites")
+               .select(` offerid, userid,offers ( id, title, description, image)`)
+               .then(({ data, error }) => {
+                    if (error) {
+                         console.log(error)
+                         console.error("Error fetching favorites")
+                         return
+                    }
+                    setRefreshing(false)
 
-          setFavorites(data)
+                    setFavorites(data)
+               })
      }
 
      return (
           <SafeAreaView style={styles.container}>
-               <ScrollView style={styles.scrollView}>
+               <ScrollView style={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={styles.feed}>
-                         {favorites.map((favorite) => {
-                              return <FavoriteCard key={favorite.id} id={favorite.id} title={favorite.title} description={favorite.description} image={favorite.image} />
-                         })}
+                         {favorites.map((favorite) => (
+                              <FavoriteCard key={favorite.offerid} id={favorite.offers.id} title={favorite.offers.title} description={favorite.offers.description} image={null} />
+                         ))}
                     </View>
                </ScrollView>
                <CircleButton method={openAddOfferScreen} />

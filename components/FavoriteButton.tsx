@@ -21,20 +21,29 @@ const FavoriteButton = (props: FavoriteButtonProps) => {
      }, [])
 
      const addFavorite = async () => {
-          setIsFavorite(!isFavorite)
+          supabase
+               .from("favorites")
+               .select("*")
+               .match({ offerid: props.offerId, userid: session?.user.id })
+               .then(async ({ data, error }) => {
+                    if (data) {
+                         console.log("length", data.length)
+                         if (data.length === 0) {
+                              setIsFavorite(true)
+                              await supabase.from("favorites").insert({ offerid: props.offerId, userid: session?.user.id })
+                         } else if (data.length > 0) {
+                              setIsFavorite(false)
 
-          const dataToInsert = {
-               offerid: props.offerId,
-               userid: session?.user.id,
-          }
+                              await supabase.from("favorites").delete().eq("offerid", props.offerId).eq("userid", session?.user.id).select()
 
-          if (!isFavorite) {
-               await supabase.from("favorites").insert(dataToInsert)
-          }
+                              console.log("fdssfd")
 
-          if (isFavorite) {
-               await supabase.from("favorites").delete().match(dataToInsert)
-          }
+                              if (error) {
+                                   console.log("error", error)
+                              }
+                         }
+                    }
+               })
      }
 
      return (
