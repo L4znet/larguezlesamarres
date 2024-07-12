@@ -33,9 +33,7 @@ const FavoriteButton = (props: FavoriteButtonProps) => {
           if (isFavorite) {
                await supabase.from("favorites").delete().match(dataToInsert)
           } else {
-               const test = await supabase.from("favorites").insert(dataToInsert)
-
-               console.log(test)
+               const data = await supabase.from("favorites").insert(dataToInsert)
           }
      }
 
