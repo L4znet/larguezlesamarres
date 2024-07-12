@@ -3,7 +3,6 @@ import Icon from "react-native-vector-icons/FontAwesome"
 import { useEffect, useState } from "react"
 import { Session } from "@supabase/supabase-js"
 import { supabase } from "../lib/supabase"
-import { PrismaClient } from "@prisma/client"
 type FavoriteButtonProps = {
      offerId: string
 }
@@ -20,7 +19,6 @@ const FavoriteButton = (props: FavoriteButtonProps) => {
 
           fetchSession()
      }, [])
-     const prisma = new PrismaClient()
 
      const addFavorite = async () => {
           setIsFavorite(!isFavorite)
@@ -30,10 +28,12 @@ const FavoriteButton = (props: FavoriteButtonProps) => {
                userid: session?.user.id,
           }
 
+          if (!isFavorite) {
+               await supabase.from("favorites").insert(dataToInsert)
+          }
+
           if (isFavorite) {
                await supabase.from("favorites").delete().match(dataToInsert)
-          } else {
-               const data = await supabase.from("favorites").insert(dataToInsert)
           }
      }
 
