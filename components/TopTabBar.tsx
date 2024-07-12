@@ -12,6 +12,7 @@ const TopTabBar = (props: TabBarProps) => {
                     <View style={styles.topBar}>
                          <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
                          <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
+                         <TopTabBarButton label={"Vos favoris"} screen={"OwnFavorites"} />
                     </View>
                )}
           </>
