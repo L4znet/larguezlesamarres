@@ -48,7 +48,7 @@ const FavoriteButton = (props: FavoriteButtonProps) => {
 
      return (
           <Pressable style={styles.favoriteButton} onPress={addFavorite}>
-               <Icon name={isFavorite ? "heart" : "heart-o"} size={25} color={"#FFF"} />
+               <Icon name={isFavorite ? "heart" : "heart-o"} size={15} color={"#FFF"} />
           </Pressable>
      )
 }
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
           right: 15,
           top: 15,
           backgroundColor: "#fd5353",
-          padding: 15,
+          padding: 13,
           borderRadius: 50,
      },
 })
