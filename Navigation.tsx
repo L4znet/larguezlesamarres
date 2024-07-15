@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import OfferScreen from "./screens/OfferScreen"
 import { ParamListBase } from "@react-navigation/native"
 import AddOfferScreen from "./screens/AddOfferScreen"
+import SearchScreen from "./screens/SearchScreen"
 
 type NavigationProps = {
      session: Session | null
@@ -70,6 +71,7 @@ const Navigation = (props: NavigationProps) => {
                     {() => <Home session={props.session} />}
                </Stack.Screen>
                <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Connexion" }} />
+               <Stack.Screen name="Search" component={SearchScreen} options={{ headerTitle: "Recherche" }} />
                <Stack.Screen name="Register" component={RegisterScreen} options={{ headerTitle: "Inscription" }} />
                <Stack.Screen name="AddOffer" component={AddOfferScreen} options={{ headerTitle: "Ajouter une offre" }} />
                <Stack.Screen name="Offer" options={{ headerTitle: "Présentation de l'offre" }}>

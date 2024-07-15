@@ -4,8 +4,14 @@ import OwnOfferCard from "../components/OwnOfferCard"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
 import CircleButton from "../components/CircleButton"
+import AddOfferButton from "../components/AddOfferButton"
+import TopTabBar from "../components/TopTabBar"
 
-const OwnOffersScreen = () => {
+type OwnOffersScreenProps = {
+     authenticated: boolean
+}
+
+const OwnOffersScreen = (props: OwnOffersScreenProps) => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
@@ -13,6 +19,7 @@ const OwnOffersScreen = () => {
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
+                    <TopTabBar isAuthenticated={props.authenticated} />
                     <View style={styles.feed}>
                          <OwnOfferCard id="1" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                          <OwnOfferCard id="2" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
@@ -21,7 +28,7 @@ const OwnOffersScreen = () => {
                          <OwnOfferCard id="5" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                     </View>
                </ScrollView>
-               <CircleButton method={openAddOfferScreen} />
+               <AddOfferButton method={openAddOfferScreen} />
           </SafeAreaView>
      )
 }

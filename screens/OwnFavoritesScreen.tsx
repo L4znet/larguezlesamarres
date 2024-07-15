@@ -5,8 +5,13 @@ import CircleButton from "../components/CircleButton"
 import FavoriteCard from "../components/FavoriteCard"
 import { supabase } from "../lib/supabase"
 import { useCallback, useEffect, useState } from "react"
+import AddOfferButton from "../components/AddOfferButton"
+import TopTabBar from "../components/TopTabBar"
 
-const OwnFavoritesScreen = () => {
+type OwnFavoritesScreenProps = {
+     authenticated: boolean
+}
+const OwnFavoritesScreen = (props: OwnFavoritesScreenProps) => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
@@ -66,13 +71,14 @@ const OwnFavoritesScreen = () => {
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                    <TopTabBar isAuthenticated={props.authenticated} />
                     <View style={styles.feed}>
                          {favorites.map((favorite) => (
                               <FavoriteCard key={favorite.offerid} id={favorite.offers.id} title={favorite.offers.title} description={favorite.offers.description} image={null} />
                          ))}
                     </View>
                </ScrollView>
-               <CircleButton method={openAddOfferScreen} />
+               <AddOfferButton method={openAddOfferScreen} />
           </SafeAreaView>
      )
 }

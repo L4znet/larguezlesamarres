@@ -25,7 +25,7 @@ const FeedScreen = (props: FeedScreenProps) => {
      }, [props.session])
 
      return (
-          <Tab.Navigator tabBar={(props) => <TopTabBar isAuthenticated={isAuthenticated} />}>
+          <Tab.Navigator tabBar={() => ""}>
                <Tab.Screen
                     options={{
                          title: "Les offres du feed",
@@ -34,22 +34,38 @@ const FeedScreen = (props: FeedScreenProps) => {
                          },
                     }}
                     name="FeedOffers"
-                    component={FeedOffersScreen}
-               />
+               >
+                    {() => (
+                         <>
+                              <FeedOffersScreen authenticated={isAuthenticated} />
+                         </>
+                    )}
+               </Tab.Screen>
+
                <Tab.Screen
                     options={{
                          title: "Vos offres",
                     }}
                     name="OwnOffers"
-                    component={OwnOffersScreen}
-               />
+               >
+                    {() => (
+                         <>
+                              <OwnOffersScreen authenticated={isAuthenticated} />
+                         </>
+                    )}
+               </Tab.Screen>
                <Tab.Screen
                     options={{
                          title: "Vos favoris",
                     }}
                     name="OwnFavorites"
-                    component={OwnFavoritesScreen}
-               />
+               >
+                    {() => (
+                         <>
+                              <OwnFavoritesScreen authenticated={isAuthenticated} />
+                         </>
+                    )}
+               </Tab.Screen>
           </Tab.Navigator>
      )
 }
