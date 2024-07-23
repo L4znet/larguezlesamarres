@@ -41,37 +41,40 @@ const AddOfferScreen = () => {
      }
 
      return (
-          <SafeAreaView>
-               <ScrollView>
-                    <View style={styles.container}>
-                         <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
+          <>
+               <SafeAreaView style={styles.container}>
+                    <ScrollView>
+                         <View style={styles.container}>
+                              <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
 
-                         <ImagePickerScreen />
+                              <ImagePickerScreen />
 
-                         <Input type={"textarea"} onChangeText={(offerDescription) => setOfferDescription(offerDescription)} value={offerDescription} placeholder={"Description de l'annonce"} />
-                         <Input type={"text"} onChangeText={(vehiculeType) => setVehiculeType(vehiculeType)} value={vehiculeType} placeholder={"Type de véhicule"} />
-                         <Input type={"number"} onChangeText={(price) => setPrice(price)} value={price} placeholder={"Prix"} />
-                         <Input type={"text"} onChangeText={(equipments) => setEquipments(equipments)} value={equipments} placeholder={"Equipements"} />
-                         <Input type={"text"} onChangeText={(locationTime) => setLocationTime(locationTime)} value={locationTime} placeholder={"Durée de location"} />
-                         <Input type={"text"} onChangeText={(location) => setLocation(location)} value={location} placeholder={"Lieu de location"} />
-                         <Input type={"text"} onChangeText={(paiementFrequency) => setPaiementFrequency(paiementFrequency)} value={paiementFrequency} placeholder={"Fréquence de paiement"} />
-                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
-                              <Text>Disponible</Text>
-                              <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsAvailable(!isAvailable)} value={isAvailable} />
+                              <Input type={"textarea"} onChangeText={(offerDescription) => setOfferDescription(offerDescription)} value={offerDescription} placeholder={"Description de l'annonce"} />
+                              <Input type={"text"} onChangeText={(vehiculeType) => setVehiculeType(vehiculeType)} value={vehiculeType} placeholder={"Type de véhicule"} />
+                              <Input type={"number"} onChangeText={(price) => setPrice(price)} value={price} placeholder={"Prix"} />
+                              <Input type={"text"} onChangeText={(equipments) => setEquipments(equipments)} value={equipments} placeholder={"Equipements"} />
+                              <Input type={"text"} onChangeText={(locationTime) => setLocationTime(locationTime)} value={locationTime} placeholder={"Durée de location"} />
+                              <Input type={"text"} onChangeText={(location) => setLocation(location)} value={location} placeholder={"Lieu de location"} />
+                              <Input type={"text"} onChangeText={(paiementFrequency) => setPaiementFrequency(paiementFrequency)} value={paiementFrequency} placeholder={"Fréquence de paiement"} />
+                              <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
+                                   <Text>Disponible</Text>
+                                   <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsAvailable(!isAvailable)} value={isAvailable} />
+                              </View>
+                              <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
+                                   <Text>Equipage disponible</Text>
+                                   <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isTeamAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsTeamAvailable(!isTeamAvailable)} value={isTeamAvailable} />
+                              </View>
+                              <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
+                                   <Text>Pilote disponible</Text>
+                                   <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isSkipperAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsSkipperAvailable(!isSkipperAvailable)} value={isSkipperAvailable} />
+                              </View>
                          </View>
-                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
-                              <Text>Equipage disponible</Text>
-                              <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isTeamAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsTeamAvailable(!isTeamAvailable)} value={isTeamAvailable} />
-                         </View>
-                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
-                              <Text>Pilote disponible</Text>
-                              <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isSkipperAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsSkipperAvailable(!isSkipperAvailable)} value={isSkipperAvailable} />
-                         </View>
-
+                    </ScrollView>
+                    <View style={styles.addOfferContainer}>
                          <Button label={"Ajouter l'annonce"} method={addOffer} />
                     </View>
-               </ScrollView>
-          </SafeAreaView>
+               </SafeAreaView>
+          </>
      )
 }
 
@@ -85,6 +88,13 @@ const styles = StyleSheet.create({
      h1: {
           fontSize: 30,
           fontWeight: "bold",
+     },
+     addOfferContainer: {
+          width: "100%",
+          alignItems: "center",
+          backgroundColor: "#FFF",
+          height: 100,
+          marginBottom: 100,
      },
 })
 
