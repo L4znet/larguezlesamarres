@@ -1,10 +1,13 @@
 import { Animated, RefreshControl, SafeAreaView, StyleSheet, View } from "react-native"
 import ScrollView = Animated.ScrollView
 import * as RootNavigation from "../RootNavigation"
-import CircleButton from "../components/CircleButton"
+import CircleButton from "../components/AddOfferButton"
 import FavoriteCard from "../components/FavoriteCard"
 import { supabase } from "../lib/supabase"
 import { useCallback, useEffect, useState } from "react"
+import AddOfferButton from "../components/AddOfferButton"
+import TopTabBar from "../components/TopTabBar"
+import { useAuth } from "../context/AuthContext"
 
 const OwnFavoritesScreen = () => {
      const openAddOfferScreen = () => {
@@ -50,7 +53,7 @@ const OwnFavoritesScreen = () => {
 
           supabase
                .from("favorites")
-               .select(` offerid, userid,offers ( id, title, description, image)`)
+               .select(`offerid, userid,offers ( id, title, description, image)`)
                .then(({ data, error }) => {
                     if (error) {
                          console.log(error)
@@ -63,16 +66,19 @@ const OwnFavoritesScreen = () => {
                })
      }
 
+     const { isAuthenticated } = useAuth()
+
      return (
           <SafeAreaView style={styles.container}>
-               <ScrollView style={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+               <ScrollView style={styles.scrollView}>
+                    <TopTabBar isAuthenticated={isAuthenticated} />
                     <View style={styles.feed}>
                          {favorites.map((favorite) => (
                               <FavoriteCard key={favorite.offerid} id={favorite.offers.id} title={favorite.offers.title} description={favorite.offers.description} image={null} />
                          ))}
                     </View>
                </ScrollView>
-               <CircleButton method={openAddOfferScreen} />
+               <AddOfferButton method={openAddOfferScreen} />
           </SafeAreaView>
      )
 }

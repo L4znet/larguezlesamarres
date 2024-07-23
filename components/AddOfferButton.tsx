@@ -6,7 +6,7 @@ type CircleButtonProps = {
      method: () => void
 }
 
-const CircleButton = (props: CircleButtonProps) => {
+const AddOfferButton = (props: CircleButtonProps) => {
      return (
           <TouchableOpacity
                style={styles.addOfferButton}
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
      },
 })
 
-export default CircleButton
+export default AddOfferButton

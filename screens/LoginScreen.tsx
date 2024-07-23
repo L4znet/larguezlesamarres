@@ -5,40 +5,24 @@ import Link from "../components/Link"
 import { supabase } from "../lib/supabase"
 import { useState } from "react"
 import * as RootNavigation from "../RootNavigation"
+import { useAuth } from "../context/AuthContext"
 
 const LoginScreen = () => {
      const [email, setEmail] = useState("")
      const [password, setPassword] = useState("")
      const [loading, setLoading] = useState(false)
 
+     const { signIn } = useAuth()
+
      async function signInWithEmail() {
           setLoading(true)
-          const { error, data } = await supabase.auth.signInWithPassword({
-               email: email,
-               password: password,
-          })
-
-          if (error) Alert.alert(error.message)
-          else {
-               RootNavigation.navigate("Feed", "")
+          try {
+               await signIn(email, password)
+          } catch (error) {
+               Alert.alert("Erreur de connexion", error.error_description || error.message)
+          } finally {
+               setLoading(false)
           }
-
-          setLoading(false)
-     }
-
-     async function signUpWithEmail() {
-          setLoading(true)
-          const {
-               data: { session },
-               error,
-          } = await supabase.auth.signUp({
-               email: email,
-               password: password,
-          })
-
-          if (error) Alert.alert(error.message)
-          if (!session) Alert.alert("Please check your inbox for email verification!")
-          setLoading(false)
      }
 
      return (

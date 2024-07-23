@@ -1,16 +1,22 @@
 import { Animated, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native"
 import Card from "../components/Card"
 import ScrollView = Animated.ScrollView
-import CircleButton from "../components/CircleButton"
+import CircleButton from "../components/AddOfferButton"
 import * as RootNavigation from "../RootNavigation"
+import AddOfferButton from "../components/AddOfferButton"
+import TopTabBar from "../components/TopTabBar"
+import { useAuth } from "../context/AuthContext"
 
 const FeedOffersScreen = () => {
      const openAddOfferScreen = () => {
           RootNavigation.navigate("AddOffer", "")
      }
+
+     const { isAuthenticated } = useAuth()
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
+                    <TopTabBar isAuthenticated={isAuthenticated} />
                     <View style={styles.feed}>
                          <Card id={"1"} title={"première Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                          <Card id={"2"} title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
@@ -19,7 +25,7 @@ const FeedOffersScreen = () => {
                          <Card id={"5"} title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                     </View>
                </ScrollView>
-               <CircleButton method={openAddOfferScreen} />
+               <AddOfferButton method={openAddOfferScreen} />
           </SafeAreaView>
      )
 }

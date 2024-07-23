@@ -1,28 +1,14 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import FeedOffersScreen from "./FeedOffersScreen"
 import OwnOffersScreen from "./OwnOffersScreen"
-import { useEffect, useState } from "react"
-import { Session } from "@supabase/supabase-js"
-import TopTabBar from "../components/TopTabBar"
-import FavoriteCard from "../components/FavoriteCard"
 import OwnFavoritesScreen from "./OwnFavoritesScreen"
+import { useAuth } from "../context/AuthContext"
+import TopTabBar from "../components/TopTabBar"
 
-interface FeedScreenProps {
-     session: Session | null
-}
-
-const FeedScreen = (props: FeedScreenProps) => {
+const FeedScreen = () => {
      const Tab = createMaterialTopTabNavigator()
 
-     const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-     useEffect(() => {
-          if (props.session) {
-               setIsAuthenticated(true)
-          } else {
-               setIsAuthenticated(false)
-          }
-     }, [props.session])
+     const { isAuthenticated, signOut } = useAuth()
 
      return (
           <Tab.Navigator tabBar={(props) => <TopTabBar isAuthenticated={isAuthenticated} />}>

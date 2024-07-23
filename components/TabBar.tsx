@@ -1,15 +1,14 @@
 import { TouchableOpacity, View, StyleSheet, Text } from "react-native"
 import TabBarButton from "./TabBarButton"
 import { useEffect } from "react"
+import { useAuth } from "../context/AuthContext"
 
-type TabBarProps = {
-     isAuthenticated: boolean
-}
-
-const TabBar = (props: TabBarProps) => {
+const TabBar = () => {
+     const { user } = useAuth()
+     console.log(user)
      return (
           <View style={styles.bottomBar}>
-               {props.isAuthenticated && (
+               {user && (
                     <>
                          <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Profile"} screen={"Profile"} label={"Profile"} />
@@ -17,7 +16,7 @@ const TabBar = (props: TabBarProps) => {
                          <TabBarButton icon={"Logout"} label={"Déconnexion"} />
                     </>
                )}
-               {!props.isAuthenticated && (
+               {!user && (
                     <>
                          <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Login"} screen={"Login"} label={"Connexion"} />

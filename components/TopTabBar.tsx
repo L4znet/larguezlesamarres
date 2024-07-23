@@ -1,14 +1,12 @@
 import { TouchableOpacity, View, StyleSheet, Text } from "react-native"
 import TopTabBarButton from "./TopTabBarButton"
+import { useAuth } from "../context/AuthContext"
 
-type TabBarProps = {
-     isAuthenticated: boolean
-}
-
-const TopTabBar = (props: TabBarProps) => {
+const TopTabBar = () => {
+     const { isAuthenticated } = useAuth()
      return (
           <>
-               {props.isAuthenticated && (
+               {isAuthenticated && (
                     <View style={styles.topBar}>
                          <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
                          <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
