@@ -1,11 +1,11 @@
 import { Animated, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native"
 import Card from "../components/Card"
 import ScrollView = Animated.ScrollView
-import CircleButton from "../components/AddOfferButton"
 import * as RootNavigation from "../RootNavigation"
 import AddOfferButton from "../components/AddOfferButton"
 import TopTabBar from "../components/TopTabBar"
 import { useAuth } from "../context/AuthContext"
+
 
 const FeedOffersScreen = () => {
      const openAddOfferScreen = () => {

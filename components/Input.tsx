@@ -8,6 +8,9 @@ type InputProps = {
 
 const Input = (props: InputProps) => {
      switch (props.type) {
+          case "textarea":
+               return <TextInput multiline onChangeText={props.onChangeText} value={props.value} style={styles.textarea} placeholder={props.placeholder} />
+
           case "email":
                return <TextInput keyboardType={"email-address"} onChangeText={props.onChangeText} value={props.value} style={styles.input} placeholder={props.placeholder} />
 
@@ -39,6 +42,19 @@ const styles = StyleSheet.create({
           borderRadius: 5,
           fontSize: 15,
           paddingLeft: 10,
+     },
+     textarea: {
+          minHeight: 190,
+          borderStyle: "solid",
+          borderWidth: 1,
+          borderColor: "#fd5353",
+          width: "90%",
+          marginVertical: 10,
+          borderRadius: 5,
+          fontSize: 15,
+          paddingLeft: 10,
+          paddingTop: 20,
+          paddingVertical: 20,
      },
 })
 

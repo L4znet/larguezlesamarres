@@ -7,6 +7,7 @@ import RegisterScreen from "./screens/RegisterScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import OfferScreen from "./screens/OfferScreen"
 import AddOfferScreen from "./screens/AddOfferScreen"
+import SearchScreen from "./screens/SearchScreen"
 
 const Navigation = () => {
      const Stack = createStackNavigator()
@@ -49,6 +50,7 @@ const Navigation = () => {
                     {() => <Home />}
                </Stack.Screen>
                <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Connexion" }} />
+               <Stack.Screen name="Search" component={SearchScreen} options={{ headerTitle: "Recherche" }} />
                <Stack.Screen name="Register" component={RegisterScreen} options={{ headerTitle: "Inscription" }} />
                <Stack.Screen name="AddOffer" component={AddOfferScreen} options={{ headerTitle: "Ajouter une offre" }} />
                <Stack.Screen name="Offer" options={{ headerTitle: "Présentation de l'offre" }}>

@@ -31,7 +31,7 @@ const ImagePickerScreen = () => {
           })
 
           if (!result.canceled) {
-               console.log(result)
+               console.log(result.uri)
                setImage(result.uri)
           }
      }

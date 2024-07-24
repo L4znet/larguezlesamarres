@@ -1,5 +1,8 @@
-import { TouchableOpacity, View, StyleSheet, Text } from "react-native"
+import { TouchableOpacity, View, StyleSheet, Text, Pressable } from "react-native"
 import TopTabBarButton from "./TopTabBarButton"
+import Input from "./Input"
+import { useState } from "react"
+import * as RootNavigation from "../RootNavigation"
 import { useAuth } from "../context/AuthContext"
 
 const TopTabBar = () => {
@@ -7,6 +10,16 @@ const TopTabBar = () => {
      return (
           <>
                {isAuthenticated && (
+               <View style={styles.searchbar}>
+                              <Pressable
+                                   style={styles.searchbarInput}
+                                   onPress={() => {
+                                        RootNavigation.navigate("Search", "")
+                                   }}
+                              >
+                                   <Text style={styles.searchbarText}> Votre recherche</Text>
+                              </Pressable>
+                         </View>
                     <View style={styles.topBar}>
                          <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
                          <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
@@ -25,6 +38,32 @@ const styles = StyleSheet.create({
           justifyContent: "space-around",
           alignItems: "center",
           width: "100%",
+          paddingHorizontal: 20,
+     },
+     searchbar: {
+          backgroundColor: "#FFF",
+          height: 80,
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+          width: "100%",
+          borderBottomWidth: 1,
+          borderBottomColor: "#f9f9f9",
+     },
+     searchbarInput: {
+          height: 60,
+          borderStyle: "solid",
+          borderWidth: 1,
+          borderColor: "#fd5353",
+          width: "90%",
+          marginVertical: 10,
+          borderRadius: 5,
+          fontSize: 15,
+          paddingLeft: 10,
+          paddingVertical: 20,
+     },
+     searchbarText: {
+          color: "#b4b4b4",
      },
 })
 

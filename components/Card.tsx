@@ -19,10 +19,15 @@ const Card = (props: CardProps) => {
           <TouchableOpacity style={styles.card} onPress={() => goToOffer(props.id)}>
                <View style={styles.cardHeader}>
                     <Image source={props.image} style={styles.image} resizeMode={"cover"} />
-                    <FavoriteButton offerId={props.id} />
+                    <View style={styles.overlay}>
+                         <FavoriteButton offerId={props.id} />
+                         <Text style={styles.title}>{props.title}</Text>
+                    </View>
+                    <View style={styles.details}>
+                         <Text style={styles.notation}>4.3/5</Text>
+                         <Text style={styles.price}>2.90 €</Text>
+                    </View>
                </View>
-
-               <Text style={styles.title}>{props.title}</Text>
           </TouchableOpacity>
      )
 }
@@ -32,7 +37,7 @@ const styles = StyleSheet.create({
           backgroundColor: "#f9f9f9",
           width: "90%",
           marginVertical: 10,
-          borderRadius: 10,
+          borderRadius: 5,
           shadowColor: "#000",
           shadowOffset: {
                width: 0,
@@ -43,23 +48,56 @@ const styles = StyleSheet.create({
           elevation: 4,
           marginTop: 20,
      },
+     overlay: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          borderRadius: 10,
+          height: 130,
+     },
      cardHeader: {
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
+          borderTopLeftRadius: 5,
+          borderTopRightRadius: 5,
           overflow: "hidden",
           position: "relative",
      },
-
      title: {
           fontSize: 20,
           fontWeight: "bold",
           marginVertical: 20,
           textAlign: "center",
+          color: "#fff",
      },
      image: {
           width: "100%",
-          height: 200,
-          borderRadius: 10,
+          height: 130,
+          borderRadius: 5,
+     },
+     details: {
+          fontSize: 15,
+          fontWeight: "bold",
+          marginVertical: 20,
+          textAlign: "center",
+          color: "#000",
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          paddingHorizontal: 20,
+     },
+     price: {
+          color: "#fd5353",
+          fontSize: 20,
+          fontWeight: "bold",
+     },
+     notation: {
+          color: "#000",
+          fontSize: 20,
+          fontWeight: "bold",
      },
 })
 
