@@ -5,36 +5,15 @@ import TabBar from "./components/TabBar"
 import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from "./screens/RegisterScreen"
 import ProfileScreen from "./screens/ProfileScreen"
-import { Session } from "@supabase/supabase-js"
-import { useEffect, useState } from "react"
 import OfferScreen from "./screens/OfferScreen"
-import { ParamListBase } from "@react-navigation/native"
 import AddOfferScreen from "./screens/AddOfferScreen"
 import SearchScreen from "./screens/SearchScreen"
 
-type NavigationProps = {
-     session: Session | null
-}
-
-type Props = {
-     navigation: StackNavigationProp<ParamListBase>
-}
-
-const Navigation = (props: NavigationProps) => {
+const Navigation = () => {
      const Stack = createStackNavigator()
      const Tab = createBottomTabNavigator()
 
-     const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-     useEffect(() => {
-          if (props.session) {
-               setIsAuthenticated(true)
-          } else {
-               setIsAuthenticated(false)
-          }
-     }, [props.session])
-
-     const Home = (props: NavigationProps) => {
+     const Home = () => {
           return (
                <Tab.Navigator
                     screenOptions={{
@@ -46,10 +25,10 @@ const Navigation = (props: NavigationProps) => {
                               fontWeight: "bold",
                          },
                     }}
-                    tabBar={() => <TabBar isAuthenticated={isAuthenticated} />}
+                    tabBar={() => <TabBar />}
                >
-                    <Tab.Screen name="Feed">{() => <FeedScreen session={props.session} />}</Tab.Screen>
-                    <Tab.Screen name="Profile">{() => <ProfileScreen session={props.session} />}</Tab.Screen>
+                    <Tab.Screen name="Feed" component={FeedScreen} />
+                    <Tab.Screen name="Profile" component={ProfileScreen} />
                </Tab.Navigator>
           )
      }
@@ -68,7 +47,7 @@ const Navigation = (props: NavigationProps) => {
                }}
           >
                <Stack.Screen name="Home" options={{ headerShown: false, headerTitle: "Feed" }}>
-                    {() => <Home session={props.session} />}
+                    {() => <Home />}
                </Stack.Screen>
                <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Connexion" }} />
                <Stack.Screen name="Search" component={SearchScreen} options={{ headerTitle: "Recherche" }} />

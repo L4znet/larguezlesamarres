@@ -3,18 +3,14 @@ import TopTabBarButton from "./TopTabBarButton"
 import Input from "./Input"
 import { useState } from "react"
 import * as RootNavigation from "../RootNavigation"
+import { useAuth } from "../context/AuthContext"
 
-type TabBarProps = {
-     isAuthenticated: boolean
-}
-
-const TopTabBar = (props: TabBarProps) => {
-     const [search, setSearch] = useState("")
+const TopTabBar = () => {
+     const { isAuthenticated } = useAuth()
      return (
           <>
-               {props.isAuthenticated && (
-                    <>
-                         <View style={styles.searchbar}>
+               {isAuthenticated && (
+               <View style={styles.searchbar}>
                               <Pressable
                                    style={styles.searchbarInput}
                                    onPress={() => {
@@ -24,12 +20,11 @@ const TopTabBar = (props: TabBarProps) => {
                                    <Text style={styles.searchbarText}> Votre recherche</Text>
                               </Pressable>
                          </View>
-                         <View style={styles.topBar}>
-                              <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
-                              <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
-                              <TopTabBarButton label={"Vos favoris"} screen={"OwnFavorites"} />
-                         </View>
-                    </>
+                    <View style={styles.topBar}>
+                         <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
+                         <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
+                         <TopTabBarButton label={"Vos favoris"} screen={"OwnFavorites"} />
+                    </View>
                )}
           </>
      )

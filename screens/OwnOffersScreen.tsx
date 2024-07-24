@@ -3,23 +3,22 @@ import ScrollView = Animated.ScrollView
 import OwnOfferCard from "../components/OwnOfferCard"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
-import CircleButton from "../components/CircleButton"
 import AddOfferButton from "../components/AddOfferButton"
+import { useAuth } from "../context/AuthContext"
 import TopTabBar from "../components/TopTabBar"
 
-type OwnOffersScreenProps = {
-     authenticated: boolean
-}
 
-const OwnOffersScreen = (props: OwnOffersScreenProps) => {
+const OwnOffersScreen = () => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
      }
+
+     const { isAuthenticated } = useAuth()
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
-                    <TopTabBar isAuthenticated={props.authenticated} />
+                    <TopTabBar isAuthenticated={isAuthenticated} />
                     <View style={styles.feed}>
                          <OwnOfferCard id="1" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                          <OwnOfferCard id="2" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />

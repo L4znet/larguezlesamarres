@@ -1,7 +1,5 @@
 import { Text, StyleSheet, Image, TouchableOpacity, View } from "react-native"
-
 import * as RootNavigation from "../RootNavigation"
-import Icon from "react-native-vector-icons/FontAwesome6"
 import FavoriteButton from "./FavoriteButton"
 
 type CardProps = {
@@ -13,6 +11,7 @@ type CardProps = {
 
 const Card = (props: CardProps) => {
      const goToOffer = (id: string) => {
+          console.log("sfdffdfd")
           RootNavigation.navigate("Offer", { id: id, title: props.title })
      }
 

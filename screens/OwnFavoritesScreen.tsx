@@ -1,17 +1,15 @@
 import { Animated, RefreshControl, SafeAreaView, StyleSheet, View } from "react-native"
 import ScrollView = Animated.ScrollView
 import * as RootNavigation from "../RootNavigation"
-import CircleButton from "../components/CircleButton"
+import CircleButton from "../components/AddOfferButton"
 import FavoriteCard from "../components/FavoriteCard"
 import { supabase } from "../lib/supabase"
 import { useCallback, useEffect, useState } from "react"
 import AddOfferButton from "../components/AddOfferButton"
 import TopTabBar from "../components/TopTabBar"
+import { useAuth } from "../context/AuthContext"
 
-type OwnFavoritesScreenProps = {
-     authenticated: boolean
-}
-const OwnFavoritesScreen = (props: OwnFavoritesScreenProps) => {
+const OwnFavoritesScreen = () => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
@@ -55,7 +53,7 @@ const OwnFavoritesScreen = (props: OwnFavoritesScreenProps) => {
 
           supabase
                .from("favorites")
-               .select(` offerid, userid,offers ( id, title, description, image)`)
+               .select(`offerid, userid,offers ( id, title, description, image)`)
                .then(({ data, error }) => {
                     if (error) {
                          console.log(error)
@@ -68,10 +66,12 @@ const OwnFavoritesScreen = (props: OwnFavoritesScreenProps) => {
                })
      }
 
+     const { isAuthenticated } = useAuth()
+
      return (
           <SafeAreaView style={styles.container}>
-               <ScrollView style={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                    <TopTabBar isAuthenticated={props.authenticated} />
+               <ScrollView style={styles.scrollView}>
+                    <TopTabBar isAuthenticated={isAuthenticated} />
                     <View style={styles.feed}>
                          {favorites.map((favorite) => (
                               <FavoriteCard key={favorite.offerid} id={favorite.offers.id} title={favorite.offers.title} description={favorite.offers.description} image={null} />

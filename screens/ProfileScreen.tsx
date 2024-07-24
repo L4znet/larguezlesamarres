@@ -2,24 +2,16 @@ import { useState, useEffect } from "react"
 import { supabase } from "../lib/supabase"
 import { StyleSheet, View, Alert } from "react-native"
 import { Button, Input } from "@rneui/themed"
-import { Session } from "@supabase/supabase-js"
 import * as RootNavigation from "../RootNavigation"
+import { useAuth } from "../context/AuthContext"
 
-type ProfileScreenProps = {
-     session: Session | null
-}
-
-const ProfileScreen = (props: ProfileScreenProps) => {
+const ProfileScreen = () => {
      const [loading, setLoading] = useState(true)
      const [username, setUsername] = useState("")
      const [website, setWebsite] = useState("")
      const [avatarUrl, setAvatarUrl] = useState("")
 
-     const session = props.session
-
-     useEffect(() => {
-          if (session) getProfile()
-     }, [session])
+     const { session } = useAuth()
 
      const logout = async () => {
           await supabase.auth.signOut()
@@ -29,7 +21,7 @@ const ProfileScreen = (props: ProfileScreenProps) => {
      const getProfile = async () => {
           try {
                setLoading(true)
-               if (!session?.user) throw new Error("No user on the session!")
+               if (user) throw new Error("No user on the session!")
 
                const { data, error, status } = await supabase.from("profiles").select(`username, website, avatar_url`).eq("id", session?.user.id).single()
                if (error && status !== 406) {
@@ -53,10 +45,10 @@ const ProfileScreen = (props: ProfileScreenProps) => {
      const updateProfile = async ({ username, website, avatar_url }: { username: string; website: string; avatar_url: string }) => {
           try {
                setLoading(true)
-               if (!session?.user) throw new Error("No user on the session!")
+               if (user) throw new Error("No user on the session!")
 
                const updates = {
-                    id: session?.user.id,
+                    id: user.id,
                     username,
                     website,
                     avatar_url,
@@ -80,7 +72,7 @@ const ProfileScreen = (props: ProfileScreenProps) => {
      return (
           <View style={styles.container}>
                <View style={[styles.verticallySpaced, styles.mt20]}>
-                    <Input label="Email" value={session?.user?.email} disabled />
+                    <Input label="Email" value={user} disabled />
                </View>
                <View style={styles.verticallySpaced}>
                     <Input label="Username" value={username || ""} onChangeText={(text) => setUsername(text)} />
