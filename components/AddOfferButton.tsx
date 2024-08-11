@@ -14,7 +14,6 @@ const AddOfferButton = (props: CircleButtonProps) => {
                     props.method()
                }}
           >
-               <Text style={styles.addOfferButtonText}>Ajouter une offre</Text>
                <Icon name={"plus"} size={20} color="#fff" />
           </TouchableOpacity>
      )

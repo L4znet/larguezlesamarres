@@ -6,10 +6,11 @@ import * as RootNavigation from "../RootNavigation"
 import { useAuth } from "../context/AuthContext"
 
 const TopTabBar = () => {
-     const { isAuthenticated } = useAuth()
+     const { user } = useAuth()
+
      return (
           <>
-               {isAuthenticated && (
+               {user && (
                     <>
                          <View style={styles.searchbar}>
                               <Pressable

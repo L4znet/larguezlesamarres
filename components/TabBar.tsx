@@ -5,7 +5,6 @@ import { useAuth } from "../context/AuthContext"
 
 const TabBar = () => {
      const { user } = useAuth()
-     console.log(user)
      return (
           <View style={styles.bottomBar}>
                {user && (
