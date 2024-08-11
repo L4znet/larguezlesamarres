@@ -25,7 +25,7 @@ const RegisterScreen = (props: RegisterScreenProps) => {
                          <Input value={lastname} onChangeText={(lastname) => setLastname(lastname)} placeholder={"Nom"} />
                          <Input value={firstname} onChangeText={(firstname) => setFirstname(firstname)} placeholder={"Prénom"} />
                          <Input value={email} onChangeText={(email) => setEmail(email)} placeholder={"E-mail"} />
-                         <Input value={password} onChangeText={(password) => setPassword(email)} placeholder={"Mot de passe"} />
+                         <Input value={password} onChangeText={(password) => setPassword(password)} placeholder={"Mot de passe"} />
                          <Button
                               label={"Inscription"}
                               method={() => {
