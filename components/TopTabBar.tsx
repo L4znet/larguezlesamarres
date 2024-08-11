@@ -10,7 +10,8 @@ const TopTabBar = () => {
      return (
           <>
                {isAuthenticated && (
-               <View style={styles.searchbar}>
+                    <>
+                         <View style={styles.searchbar}>
                               <Pressable
                                    style={styles.searchbarInput}
                                    onPress={() => {
@@ -20,11 +21,12 @@ const TopTabBar = () => {
                                    <Text style={styles.searchbarText}> Votre recherche</Text>
                               </Pressable>
                          </View>
-                    <View style={styles.topBar}>
-                         <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
-                         <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
-                         <TopTabBarButton label={"Vos favoris"} screen={"OwnFavorites"} />
-                    </View>
+                         <View style={styles.topBar}>
+                              <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
+                              <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
+                              <TopTabBarButton label={"Vos favoris"} screen={"OwnFavorites"} />
+                         </View>
+                    </>
                )}
           </>
      )

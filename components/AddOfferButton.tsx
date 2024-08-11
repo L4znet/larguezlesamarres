@@ -1,4 +1,3 @@
-
 import { StyleSheet, TouchableOpacity, Text } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
@@ -6,7 +5,6 @@ import * as RootNavigation from "../RootNavigation"
 type CircleButtonProps = {
      method: () => void
 }
-
 
 const AddOfferButton = (props: CircleButtonProps) => {
      return (
@@ -50,8 +48,6 @@ const styles = StyleSheet.create({
           fontWeight: "bold",
           textTransform: "uppercase",
           marginRight: 10,
-     },
-})
      },
 })
 
