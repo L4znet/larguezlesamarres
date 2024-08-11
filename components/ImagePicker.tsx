@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker"
 import { Pressable } from "react-native"
 
 const ImagePickerScreen = () => {
-     const [image, setImage] = useState(null)
+     const [image, setImage] = useState("")
 
      useEffect(() => {
           ;(async () => {
@@ -28,18 +28,18 @@ const ImagePickerScreen = () => {
                allowsEditing: true,
                aspect: [4, 3],
                quality: 1,
+               base64: true,
           })
 
           if (!result.canceled) {
-               console.log(result.uri)
-               setImage(result.uri)
+               setImage(result.assets[0].base64 ?? "")
           }
      }
 
      return (
           <View style={styles.container}>
                <Button title="Pick an image from camera roll" onPress={pickImage} />
-               {image && <Image source={{ uri: image }} style={styles.image} />}
+               {image && <Image source={{ uri: "data:image/png;base64," + image }} style={styles.image} />}
           </View>
      )
 }
