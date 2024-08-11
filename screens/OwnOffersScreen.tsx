@@ -7,7 +7,6 @@ import AddOfferButton from "../components/AddOfferButton"
 import { useAuth } from "../context/AuthContext"
 import TopTabBar from "../components/TopTabBar"
 
-
 const OwnOffersScreen = () => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
@@ -18,7 +17,7 @@ const OwnOffersScreen = () => {
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
-                    <TopTabBar isAuthenticated={isAuthenticated} />
+                    <TopTabBar />
                     <View style={styles.feed}>
                          <OwnOfferCard id="1" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
                          <OwnOfferCard id="2" title={"Lorem aaaa ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />

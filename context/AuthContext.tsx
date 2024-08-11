@@ -22,29 +22,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
      const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
      useEffect(() => {
-          const session = supabase.auth.getSession()
-          setUser(session?.user)
           const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
                setUser(session?.user ?? null)
+               setIsAuthenticated(!!session)
           })
           return () => {
-               listener?.unsubscribe()
+               listener?.subscription.unsubscribe()
           }
      }, [])
 
      const signIn = async (email: string, password: string) => {
           console.log({ email, password })
-          const { error, user } = await supabase.auth.signInWithPassword({ email, password })
+          const { error, data } = await supabase.auth.signInWithPassword({ email, password })
           if (error) throw error
-          setUser(user)
-          setIsAuthenticated(true)
+          setUser(data?.user)
           RootNavigation.navigate("Feed", "")
      }
 
      const signUp = async (email: string, password: string) => {
-          const { error, user } = await supabase.auth.signUp({ email, password })
+          const { error, data } = await supabase.auth.signUp({ email, password })
           if (error) throw error
-          setUser(user)
+          setUser(data?.user)
      }
 
      const signOut = async () => {
@@ -53,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null)
      }
 
-     return <AuthContext.Provider value={{ user, signIn, signUp, signOut }}>{children}</AuthContext.Provider>
+     return <AuthContext.Provider value={{ user, signIn, signUp, signOut, isAuthenticated }}>{children}</AuthContext.Provider>
 }
 
 // Custom hook to use auth context

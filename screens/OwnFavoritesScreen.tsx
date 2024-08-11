@@ -1,20 +1,17 @@
 import { Animated, RefreshControl, SafeAreaView, StyleSheet, View } from "react-native"
 import ScrollView = Animated.ScrollView
 import * as RootNavigation from "../RootNavigation"
-import CircleButton from "../components/AddOfferButton"
 import FavoriteCard from "../components/FavoriteCard"
 import { supabase } from "../lib/supabase"
 import { useCallback, useEffect, useState } from "react"
 import AddOfferButton from "../components/AddOfferButton"
 import TopTabBar from "../components/TopTabBar"
-import { useAuth } from "../context/AuthContext"
 
 const OwnFavoritesScreen = () => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
      }
-
      type Offer = {
           id: string
           title: string
@@ -25,16 +22,10 @@ const OwnFavoritesScreen = () => {
      type Favorite = {
           offerid: string
           userid: string
-          offers: Offer
+          offers: Offer[]
      }
 
      const [favorites, setFavorites] = useState<Favorite[]>([])
-     const [loading, setLoading] = useState(true)
-     const [session, setSession] = useState<string | null>(null)
-
-     supabase.auth.getSession().then(({ data: { session } }) => {
-          setSession(session?.user.id ?? null)
-     })
 
      useEffect(() => {
           getFavorites()
@@ -49,12 +40,18 @@ const OwnFavoritesScreen = () => {
      }, [])
 
      const getFavorites = async () => {
-          // select * from favorites where userid = session?.user.id and join offers on favorites.offerid = offers.id
+          if (favorites.length === 0) {
+               // TODO : Add a message when there is no favorites
+               console.log("Pas de favoris pour le moment")
+               return
+          } else {
+               console.log("favorites", favorites)
+          }
 
           supabase
                .from("favorites")
                .select(`offerid, userid,offers ( id, title, description, image)`)
-               .then(({ data, error }) => {
+               .then(({ data: favoritesData, error }) => {
                     if (error) {
                          console.log(error)
                          console.error("Error fetching favorites")
@@ -62,21 +59,15 @@ const OwnFavoritesScreen = () => {
                     }
                     setRefreshing(false)
 
-                    setFavorites(data)
+                    setFavorites(favoritesData as Favorite[])
                })
      }
-
-     const { isAuthenticated } = useAuth()
 
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>
-                    <TopTabBar isAuthenticated={isAuthenticated} />
-                    <View style={styles.feed}>
-                         {favorites.map((favorite) => (
-                              <FavoriteCard key={favorite.offerid} id={favorite.offers.id} title={favorite.offers.title} description={favorite.offers.description} image={null} />
-                         ))}
-                    </View>
+                    <TopTabBar />
+                    <View style={styles.feed}>{favorites.map((favorite) => favorite.offers.map((offer, index) => <FavoriteCard key={index} id={offer.id} title={offer.title} description={offer.description} image={null} />))}</View>
                </ScrollView>
                <AddOfferButton method={openAddOfferScreen} />
           </SafeAreaView>

@@ -4,10 +4,10 @@ import { useEffect } from "react"
 import { useAuth } from "../context/AuthContext"
 
 const TabBar = () => {
-     const { user } = useAuth()
+     const { isAuthenticated } = useAuth()
      return (
           <View style={styles.bottomBar}>
-               {user && (
+               {isAuthenticated && (
                     <>
                          <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Profile"} screen={"Profile"} label={"Profile"} />
@@ -15,7 +15,7 @@ const TabBar = () => {
                          <TabBarButton icon={"Logout"} label={"Déconnexion"} />
                     </>
                )}
-               {!user && (
+               {!isAuthenticated && (
                     <>
                          <TabBarButton icon={"Feed"} label={"Feed"} screen={"Feed"} />
                          <TabBarButton icon={"Login"} screen={"Login"} label={"Connexion"} />

@@ -93,8 +93,6 @@ const styles = StyleSheet.create({
           width: "100%",
           alignItems: "center",
           backgroundColor: "#FFF",
-          height: 100,
-          marginBottom: 100,
      },
 })
 
