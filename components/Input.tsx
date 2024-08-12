@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
           borderRadius: 5,
           fontSize: 15,
           paddingLeft: 10,
-          paddingTop: 20,
+          paddingTop: 10,
           paddingVertical: 20,
      },
 })
