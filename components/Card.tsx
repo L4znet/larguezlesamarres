@@ -5,13 +5,13 @@ import FavoriteButton from "./FavoriteButton"
 type CardProps = {
      id: string
      title: string
-     description: string
      image: any
+     price: string
+     frequency: string
 }
 
 const Card = (props: CardProps) => {
      const goToOffer = (id: string) => {
-          console.log("sfdffdfd")
           RootNavigation.navigate("Offer", { id: id, title: props.title })
      }
 
@@ -25,7 +25,9 @@ const Card = (props: CardProps) => {
                     </View>
                     <View style={styles.details}>
                          <Text style={styles.notation}>4.3/5</Text>
-                         <Text style={styles.price}>2.90 €</Text>
+                         <Text style={styles.price}>
+                              {props.price} € / {props.frequency}
+                         </Text>
                     </View>
                </View>
           </TouchableOpacity>
