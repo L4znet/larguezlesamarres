@@ -5,20 +5,21 @@ import { useState } from "react"
 import ImagePickerScreen from "../components/ImagePicker"
 import { supabase } from "../lib/supabase"
 import { showMessage, hideMessage } from "react-native-flash-message"
+import * as RootNavigation from "../RootNavigation"
 
 const AddOfferScreen = () => {
-     const [title, setTitle] = useState("")
+     const [title, setTitle] = useState("Ma super offre")
      const [image, setImage] = useState("")
-     const [offerDescription, setOfferDescription] = useState("")
-     const [vehiculeType, setVehiculeType] = useState("")
-     const [price, setPrice] = useState("")
-     const [isAvailable, setIsAvailable] = useState(false)
-     const [isSkipperAvailable, setIsSkipperAvailable] = useState(false)
+     const [offerDescription, setOfferDescription] = useState("fdsffdqfdsdsqfsfqsfdqsf")
+     const [vehiculeType, setVehiculeType] = useState("Bateau à voile")
+     const [price, setPrice] = useState("100")
+     const [isAvailable, setIsAvailable] = useState(true)
+     const [isSkipperAvailable, setIsSkipperAvailable] = useState(true)
      const [isTeamAvailable, setIsTeamAvailable] = useState(false)
-     const [equipments, setEquipments] = useState("")
-     const [locationTime, setLocationTime] = useState("")
-     const [location, setLocation] = useState("")
-     const [paiementFrequency, setPaiementFrequency] = useState("")
+     const [equipments, setEquipments] = useState("fdsmlkjfdsq")
+     const [locationTime, setLocationTime] = useState("Aujourd'hui")
+     const [location, setLocation] = useState("Nantes")
+     const [paiementFrequency, setPaiementFrequency] = useState("Par mois")
 
      const handleImagePicked = (image: string) => {
           setImage(image)
@@ -45,11 +46,12 @@ const AddOfferScreen = () => {
           if (error) {
                console.log(error)
           } else {
-               console.log(data)
                showMessage({
                     message: "Offre ajoutée avec succès",
                     type: "success",
                })
+
+               RootNavigation.goBack()
           }
      }
 
