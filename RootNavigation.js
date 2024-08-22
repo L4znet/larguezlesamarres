@@ -12,3 +12,13 @@ export function navigate(name, params) {
           navigationRef.navigate(name, params)
      }
 }
+
+/**
+ * We use to go back to the previous screen
+ *
+ */
+export function goBack() {
+     if (navigationRef.isReady() && navigationRef.canGoBack()) {
+          navigationRef.goBack()
+     }
+}
