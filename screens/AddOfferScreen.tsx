@@ -4,10 +4,11 @@ import Button from "../components/Button"
 import { useState } from "react"
 import ImagePickerScreen from "../components/ImagePicker"
 import { supabase } from "../lib/supabase"
+import { showMessage, hideMessage } from "react-native-flash-message"
 
 const AddOfferScreen = () => {
      const [title, setTitle] = useState("")
-     const [image, setImage] = useState(null)
+     const [image, setImage] = useState("")
      const [offerDescription, setOfferDescription] = useState("")
      const [vehiculeType, setVehiculeType] = useState("")
      const [price, setPrice] = useState("")
@@ -18,6 +19,10 @@ const AddOfferScreen = () => {
      const [locationTime, setLocationTime] = useState("")
      const [location, setLocation] = useState("")
      const [paiementFrequency, setPaiementFrequency] = useState("")
+
+     const handleImagePicked = (image: string) => {
+          setImage(image)
+     }
 
      const addOffer = async () => {
           const { data, error } = await supabase.from("offers").insert([
@@ -37,7 +42,15 @@ const AddOfferScreen = () => {
                },
           ])
 
-          console.log({ data: data, error: error })
+          if (error) {
+               console.log(error)
+          } else {
+               console.log(data)
+               showMessage({
+                    message: "Offre ajoutée avec succès",
+                    type: "success",
+               })
+          }
      }
 
      return (
@@ -45,9 +58,8 @@ const AddOfferScreen = () => {
                <SafeAreaView style={styles.container}>
                     <ScrollView>
                          <View style={styles.container}>
+                              <ImagePickerScreen onImagePicked={handleImagePicked} />
                               <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
-
-                              <ImagePickerScreen />
 
                               <Input type={"textarea"} onChangeText={(offerDescription) => setOfferDescription(offerDescription)} value={offerDescription} placeholder={"Description de l'annonce"} />
                               <Input type={"text"} onChangeText={(vehiculeType) => setVehiculeType(vehiculeType)} value={vehiculeType} placeholder={"Type de véhicule"} />
@@ -56,17 +68,17 @@ const AddOfferScreen = () => {
                               <Input type={"text"} onChangeText={(locationTime) => setLocationTime(locationTime)} value={locationTime} placeholder={"Durée de location"} />
                               <Input type={"text"} onChangeText={(location) => setLocation(location)} value={location} placeholder={"Lieu de location"} />
                               <Input type={"text"} onChangeText={(paiementFrequency) => setPaiementFrequency(paiementFrequency)} value={paiementFrequency} placeholder={"Fréquence de paiement"} />
-                              <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
+                              <View style={styles.switchContainer}>
                                    <Text>Disponible</Text>
-                                   <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsAvailable(!isAvailable)} value={isAvailable} />
+                                   <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsAvailable(!isAvailable)} value={isAvailable} />
                               </View>
-                              <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
+                              <View style={styles.switchContainer}>
                                    <Text>Equipage disponible</Text>
-                                   <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isTeamAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsTeamAvailable(!isTeamAvailable)} value={isTeamAvailable} />
+                                   <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isTeamAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsTeamAvailable(!isTeamAvailable)} value={isTeamAvailable} />
                               </View>
-                              <View style={{ flexDirection: "row", justifyContent: "space-between", width: "80%" }}>
+                              <View style={styles.switchContainer}>
                                    <Text>Pilote disponible</Text>
-                                   <Switch trackColor={{ false: "#767577", true: "#81b0ff" }} thumbColor={isSkipperAvailable ? "#f5dd4b" : "#f4f3f4"} onValueChange={() => setIsSkipperAvailable(!isSkipperAvailable)} value={isSkipperAvailable} />
+                                   <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isSkipperAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsSkipperAvailable(!isSkipperAvailable)} value={isSkipperAvailable} />
                               </View>
                          </View>
                     </ScrollView>
@@ -82,7 +94,6 @@ const styles = StyleSheet.create({
      container: {
           flex: 1,
           alignItems: "center",
-          marginVertical: 20,
      },
 
      h1: {
@@ -93,6 +104,12 @@ const styles = StyleSheet.create({
           width: "100%",
           alignItems: "center",
           backgroundColor: "#FFF",
+     },
+     switchContainer: {
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "80%",
+          marginVertical: 10,
      },
 })
 

@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react"
 import { Button, View, Image, Platform, StyleSheet, Text } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 import { Pressable } from "react-native"
+import Icon from "react-native-vector-icons/FontAwesome6"
 
-const ImagePickerScreen = () => {
-     const [image, setImage] = useState(null)
+type ImagePickerScreenProps = {
+     onImagePicked: (image: string) => void
+}
+
+const ImagePickerScreen = ({ onImagePicked }: ImagePickerScreenProps) => {
+     const [image, setImage] = useState("")
 
      useEffect(() => {
           ;(async () => {
@@ -23,23 +28,38 @@ const ImagePickerScreen = () => {
      }, [])
 
      const pickImage = async () => {
+          // aspect for   width: 374,
+          //           height: 200,
+
           let result = await ImagePicker.launchImageLibraryAsync({
                mediaTypes: ImagePicker.MediaTypeOptions.All,
                allowsEditing: true,
-               aspect: [4, 3],
+               aspect: [374, 200],
                quality: 1,
+               base64: true,
           })
 
           if (!result.canceled) {
-               console.log(result.uri)
-               setImage(result.uri)
+               const imagebase64 = result.assets[0].base64 ?? ""
+               setImage(imagebase64)
+               onImagePicked(imagebase64)
           }
      }
 
      return (
           <View style={styles.container}>
-               <Button title="Pick an image from camera roll" onPress={pickImage} />
-               {image && <Image source={{ uri: image }} style={styles.image} />}
+               {!image && (
+                    <Pressable style={styles.pickerButton} onPress={pickImage}>
+                         <Icon name={"arrow-up-from-bracket"} size={90} color="#fff" />
+                         <Text style={styles.pickerButtonText}>Sélectionnez votre image</Text>
+                    </Pressable>
+               )}
+
+               {image && (
+                    <Pressable style={styles.imageButton} onPress={pickImage}>
+                         <Image source={{ uri: "data:image/png;base64," + image }} style={styles.image} />
+                    </Pressable>
+               )}
           </View>
      )
 }
@@ -53,8 +73,27 @@ const styles = StyleSheet.create({
           justifyContent: "center",
      },
      image: {
-          width: 200,
+          width: 374,
           height: 200,
+     },
+     pickerButton: {
+          width: 374,
+          height: 200,
+          backgroundColor: "#ababab",
+          justifyContent: "center",
+          alignItems: "center",
+     },
+     pickerButtonText: {
+          color: "#fff",
+          textAlign: "center",
           marginTop: 20,
+          fontSize: 20,
+     },
+     imageButton: {
+          width: 374,
+          height: 200,
+          backgroundColor: "#ababab",
+          justifyContent: "center",
+          alignItems: "center",
      },
 })
