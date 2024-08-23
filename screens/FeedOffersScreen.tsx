@@ -5,10 +5,55 @@ import * as RootNavigation from "../RootNavigation"
 import AddOfferButton from "../components/AddOfferButton"
 import TopTabBar from "../components/TopTabBar"
 import { useAuth } from "../context/AuthContext"
+import { supabase } from "../lib/supabase"
+import { useEffect, useState } from "react"
+type User = {
+     id: string
+}
 
-const FeedOffersScreen = () => {
+type FeedOffersScreenProps = {
+     authenticated: User | null
+}
+const FeedOffersScreen = (props: FeedOffersScreenProps) => {
      const openAddOfferScreen = () => {
           RootNavigation.navigate("AddOffer", "")
+     }
+
+     const user = props.authenticated
+
+     type Offer = {
+          id: string
+          title: string
+          image: string
+          price: string
+          paiementFrequency: string
+     }
+
+     // props type
+
+     const [refreshing, setRefreshing] = useState(false)
+     const [offers, setOffers] = useState<Offer[]>([])
+
+     useEffect(() => {
+          getFeedOffers()
+     }, [offers])
+
+     const getFeedOffers = async () => {
+          // TODO : Get the feed offers
+
+          supabase
+               .from("offers")
+               .select("id, title, price, image, paiementFrequency")
+               .then(({ data: offersData, error }) => {
+                    if (error) {
+                         console.log(error)
+                         console.error("Error fetching favorites")
+                         return
+                    }
+                    setRefreshing(false)
+
+                    setOffers(offersData as Offer[])
+               })
      }
 
      return (
@@ -16,14 +61,12 @@ const FeedOffersScreen = () => {
                <ScrollView style={styles.scrollView}>
                     <TopTabBar />
                     <View style={styles.feed}>
-                         <Card id={"1"} title={"première Lffforem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card id={"2"} title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card id={"3"} title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card id={"4"} title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
-                         <Card id={"5"} title={"Lorem ipsum"} description={""} image={require("../assets/images/bateau.jpg")} />
+                         {offers.map((offer) => {
+                              return <Card key={offer.id} id={offer.id} title={offer.title} price={offer.price} frequency={offer.paiementFrequency} image={require("../assets/images/bateau.jpg")} />
+                         })}
                     </View>
                </ScrollView>
-               <AddOfferButton method={openAddOfferScreen} />
+               {user && <AddOfferButton method={openAddOfferScreen} />}
           </SafeAreaView>
      )
 }

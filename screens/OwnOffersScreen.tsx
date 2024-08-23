@@ -7,13 +7,21 @@ import AddOfferButton from "../components/AddOfferButton"
 import { useAuth } from "../context/AuthContext"
 import TopTabBar from "../components/TopTabBar"
 
-const OwnOffersScreen = () => {
+type User = {
+     id: string
+}
+
+type OwnOffersScreenProps = {
+     authenticated: User | null
+}
+
+const OwnOffersScreen = (props: OwnOffersScreenProps) => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
      }
 
-     const { isAuthenticated } = useAuth()
+     const user = props.authenticated
      return (
           <SafeAreaView style={styles.container}>
                <ScrollView style={styles.scrollView}>

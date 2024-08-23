@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView } from "react-native"
+import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView, ActivityIndicator } from "react-native"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import Icon from "react-native-vector-icons/FontAwesome6"
+import { supabase } from "../lib/supabase"
+import React, { useEffect, useState } from "react"
 
 type RootStackParamList = {
      id: string
@@ -10,87 +12,101 @@ type RootStackParamList = {
 interface Offer {
      id: string
      title: string
+     description: string
      image: any
+     price: string
+     paiementFrequency: string
+     vehiculeType: string
+     isSkipperAvailable: boolean
+     isTeamAvailable: boolean
+     locationTime: string
+     location: string
+     equipments: string
 }
 
 const OfferScreen = (props: RootStackParamList) => {
-     const data: Offer[] = [
-          {
-               id: "1",
-               title: "Lorem ipsum",
-               image: require("../assets/images/bateau.jpg"),
-          },
-          {
-               id: "2",
-               title: "Another title",
-               image: require("../assets/images/bateau.jpg"),
-          },
-          {
-               id: "3",
-               title: "Another 3 title",
-               image: require("../assets/images/bateau.jpg"),
-          },
-          {
-               id: "4",
-               title: "Another 4 title",
-               image: require("../assets/images/bateau.jpg"),
-          },
-          {
-               id: "5",
-               title: "Another 5 title",
-               image: require("../assets/images/bateau.jpg"),
-          },
-     ]
+     const [offer, setOffer] = useState<Offer | null>(null)
+     const [refreshing, setRefreshing] = useState(false)
+     const [loading, setLoading] = useState(true)
 
-     const offer = data.find((item: Offer) => item.id === props.id)
+     useEffect(() => {
+          getOffer(props.id)
+     }, [props.id])
+     const getOffer = (id: string) => {
+          supabase
+               .from("offers")
+               .select("*")
+               .eq("id", id)
+               .then(({ data: offersData, error }) => {
+                    if (error) {
+                         console.log(error)
+                         console.error("Error fetching favorites")
+                         return
+                    }
+                    setLoading(false)
+                    setRefreshing(false)
+                    setOffer(offersData[0] as Offer)
+               })
+     }
+
+     if (loading) {
+          return (
+               <View style={styles.loading}>
+                    <Text style={styles.loadingMessage}>Un instant..</Text>
+                    <ActivityIndicator size="large" color="#000" />
+               </View>
+          ) // Display loading message
+     }
 
      if (!offer) {
           return <Text>Offer not found</Text>
      }
 
-     // Here we define the answers for the questions about the offer
-     const { isSkipperAvailable, isTeamAvailable } = {
-          isSkipperAvailable: 1,
-          isTeamAvailable: 0,
-     }
+     const base64Image = "data:image/png;base64," + offer.image
 
-     const { title, image } = offer
      return (
-          <SafeAreaView>
-               <ScrollView style={styles.offer}>
-                    <View>
-                         <Text style={styles.title}>{title}</Text>
-                         <Image source={image} style={styles.image} resizeMode={"cover"} />
-                         <View style={styles.subDetails}>
-                              <Icon name={"location-dot"} size={20} color="#fff" />
-                              <Text style={styles.subDetailsText}>Nantes </Text>
-                         </View>
-                         <View style={styles.description}>
-                              <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci at consectetur consequatur consequuntur distinctio dolorem excepturi inventore iure magnam magni, maiores, nam odio padipisicing elit. Ad adip</Text>
-                         </View>
-                         <View style={styles.question}>
-                              <Text style={styles.questionTitle}>Proposez-vous un skipper avec ce véhicule ?</Text>
-                              <View style={[styles.questionAnswer, isSkipperAvailable ? styles.questionAnswerYes : styles.questionAnswerNo]}>
-                                   <Text style={styles.questionAnswerText}>{isSkipperAvailable ? "Oui" : "Non"}</Text>
-                              </View>
-                         </View>
-                         <View style={styles.question}>
-                              <Text style={styles.questionTitle}>Avez-vous un équipage avec ce véhicule ?</Text>
-                              <View style={[styles.questionAnswer, isTeamAvailable ? styles.questionAnswerYes : styles.questionAnswerNo]}>
-                                   <Text style={styles.questionAnswerText}>{isTeamAvailable ? "Oui" : "Non"}</Text>
-                              </View>
+          <ScrollView style={styles.offer}>
+               <View>
+                    <Text style={styles.title}>{offer.title}</Text>
+                    <Image source={{ uri: base64Image }} style={styles.image} resizeMode={"cover"} />
+                    <View style={styles.subDetails}>
+                         <Icon name={"location-dot"} size={20} color="#fff" />
+                         <Text style={styles.subDetailsText}>{offer.location} </Text>
+                    </View>
+                    <View style={styles.description}>
+                         <Text style={styles.descriptionText}>{offer.description}</Text>
+                    </View>
+                    <View style={styles.question}>
+                         <Text style={styles.questionTitle}>Proposez-vous un skipper avec ce véhicule ?</Text>
+                         <View style={[styles.questionAnswer, offer.isSkipperAvailable ? styles.questionAnswerYes : styles.questionAnswerNo]}>
+                              <Text style={styles.questionAnswerText}>{offer.isSkipperAvailable ? "Oui" : "Non"}</Text>
                          </View>
                     </View>
-               </ScrollView>
-          </SafeAreaView>
+                    <View style={styles.question}>
+                         <Text style={styles.questionTitle}>Avez-vous un équipage avec ce véhicule ?</Text>
+                         <View style={[styles.questionAnswer, offer.isTeamAvailable ? styles.questionAnswerYes : styles.questionAnswerNo]}>
+                              <Text style={styles.questionAnswerText}>{offer.isTeamAvailable ? "Oui" : "Non"}</Text>
+                         </View>
+                    </View>
+                    <View style={styles.question}>
+                         <Text style={styles.questionTitle}>Equipement supplémentaire disponible</Text>
+                         <Text style={styles.equipment}>{offer.equipments}</Text>
+                    </View>
+               </View>
+          </ScrollView>
      )
 }
 
 const styles = StyleSheet.create({
      offer: {
-          backgroundColor: "#efefef",
+          backgroundColor: "#FFF",
           width: "100%",
           height: "100%",
+          color: "#000",
+     },
+     safeArea: {
+          backgroundColor: "#FFF",
+          flex: 1,
           color: "#000",
      },
      title: {
@@ -154,6 +170,20 @@ const styles = StyleSheet.create({
      },
      questionAnswerNo: {
           backgroundColor: "#e74c3c",
+     },
+     equipment: {
+          padding: 20,
+          backgroundColor: "#FFF",
+     },
+     loading: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+     },
+     loadingMessage: {
+          fontSize: 20,
+          fontWeight: "bold",
+          marginBottom: 20,
      },
 })
 

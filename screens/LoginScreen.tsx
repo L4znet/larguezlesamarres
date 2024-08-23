@@ -2,9 +2,7 @@ import { View, Text, StyleSheet, Alert } from "react-native"
 import Input from "../components/Input"
 import Button from "../components/Button"
 import Link from "../components/Link"
-import { supabase } from "../lib/supabase"
 import { useState } from "react"
-import * as RootNavigation from "../RootNavigation"
 import { useAuth } from "../context/AuthContext"
 
 const LoginScreen = () => {
@@ -19,7 +17,7 @@ const LoginScreen = () => {
           try {
                await signIn(email, password)
           } catch (error) {
-               Alert.alert("Erreur de connexion", error.error_description || error.message)
+               console.log(error)
           } finally {
                setLoading(false)
           }

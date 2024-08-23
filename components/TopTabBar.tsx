@@ -6,11 +6,11 @@ import * as RootNavigation from "../RootNavigation"
 import { useAuth } from "../context/AuthContext"
 
 const TopTabBar = () => {
-     const { isAuthenticated } = useAuth()
+     const { user } = useAuth()
 
      return (
           <>
-               {isAuthenticated && (
+               {user && (
                     <>
                          <View style={styles.searchbar}>
                               <Pressable
@@ -26,6 +26,23 @@ const TopTabBar = () => {
                               <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
                               <TopTabBarButton label={"Vos offres"} screen={"OwnOffers"} />
                               <TopTabBarButton label={"Vos favoris"} screen={"OwnFavorites"} />
+                         </View>
+                    </>
+               )}
+               {!user && (
+                    <>
+                         <View style={styles.searchbar}>
+                              <Pressable
+                                   style={styles.searchbarInput}
+                                   onPress={() => {
+                                        RootNavigation.navigate("Search", "")
+                                   }}
+                              >
+                                   <Text style={styles.searchbarText}> Votre recherche</Text>
+                              </Pressable>
+                         </View>
+                         <View style={styles.topBar}>
+                              <TopTabBarButton label={"Les offres du feed"} screen={"FeedOffers"} />
                          </View>
                     </>
                )}

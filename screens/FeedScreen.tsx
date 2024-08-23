@@ -8,7 +8,7 @@ import TopTabBar from "../components/TopTabBar"
 const FeedScreen = () => {
      const Tab = createMaterialTopTabNavigator()
 
-     const { isAuthenticated, signOut } = useAuth()
+     const { user, signOut } = useAuth()
 
      return (
           <Tab.Navigator tabBar={() => ""}>
@@ -23,7 +23,7 @@ const FeedScreen = () => {
                >
                     {() => (
                          <>
-                              <FeedOffersScreen authenticated={isAuthenticated} />
+                              <FeedOffersScreen authenticated={user} />
                          </>
                     )}
                </Tab.Screen>
@@ -36,7 +36,7 @@ const FeedScreen = () => {
                >
                     {() => (
                          <>
-                              <OwnOffersScreen authenticated={isAuthenticated} />
+                              <OwnOffersScreen authenticated={user} />
                          </>
                     )}
                </Tab.Screen>
@@ -48,7 +48,7 @@ const FeedScreen = () => {
                >
                     {() => (
                          <>
-                              <OwnFavoritesScreen authenticated={isAuthenticated} />
+                              <OwnFavoritesScreen authenticated={user} />
                          </>
                     )}
                </Tab.Screen>
