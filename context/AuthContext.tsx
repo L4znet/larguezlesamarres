@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react"
 import { supabase } from "../lib/supabase"
 import { User } from "@supabase/supabase-js"
 import * as RootNavigation from "../RootNavigation"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 // Context type definition
 interface AuthContextType {
@@ -22,9 +23,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
      const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
      useEffect(() => {
-          const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+          const loadUser = async () => {
+               const storedUser = await AsyncStorage.getItem("user")
+               if (storedUser) {
+                    setUser(JSON.parse(storedUser))
+                    setIsAuthenticated(true)
+               }
+          }
+
+          loadUser()
+
+          const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
                setUser(session?.user ?? null)
                setIsAuthenticated(!!session)
+               if (session?.user) {
+                    await AsyncStorage.setItem("user", JSON.stringify(session.user))
+               } else {
+                    await AsyncStorage.removeItem("user")
+               }
+               RootNavigation.navigate("FeedOffers", "")
           })
           return () => {
                listener?.subscription.unsubscribe()
@@ -32,11 +49,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
      }, [])
 
      const signIn = async (email: string, password: string) => {
-          console.log({ email, password })
           const { error, data } = await supabase.auth.signInWithPassword({ email, password })
           if (error) throw error
           setUser(data?.user)
-          RootNavigation.navigate("Feed", "")
+          setIsAuthenticated(true)
+          if (data?.user) {
+               await AsyncStorage.setItem("user", JSON.stringify(data.user))
+          }
+          RootNavigation.navigate("FeedOffers", "")
      }
 
      const signUp = async (email: string, password: string) => {
@@ -49,6 +69,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const { error } = await supabase.auth.signOut()
           if (error) throw error
           setUser(null)
+          setIsAuthenticated(false)
+          await AsyncStorage.removeItem("user")
      }
 
      return <AuthContext.Provider value={{ user, signIn, signUp, signOut, isAuthenticated }}>{children}</AuthContext.Provider>

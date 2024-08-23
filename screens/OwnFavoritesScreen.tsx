@@ -6,8 +6,17 @@ import { supabase } from "../lib/supabase"
 import { useCallback, useEffect, useState } from "react"
 import AddOfferButton from "../components/AddOfferButton"
 import TopTabBar from "../components/TopTabBar"
+import { useAuth } from "../context/AuthContext"
 
-const OwnFavoritesScreen = () => {
+type User = {
+     id: string
+}
+
+type OwnFavoritesScreenProps = {
+     authenticated: User | null
+}
+
+const OwnFavoritesScreen = (props: OwnFavoritesScreenProps) => {
      const openAddOfferScreen = () => {
           console.log("openAddOfferScreen")
           RootNavigation.navigate("AddOffer", "")
@@ -26,6 +35,7 @@ const OwnFavoritesScreen = () => {
      }
 
      const [favorites, setFavorites] = useState<Favorite[]>([])
+     const user = props.authenticated
 
      useEffect(() => {
           getFavorites()
@@ -50,7 +60,8 @@ const OwnFavoritesScreen = () => {
 
           supabase
                .from("favorites")
-               .select(`offerid, userid,offers ( id, title, description, image)`)
+               .select(`offerid, offers:offers (id, title, description, image)`)
+               .eq("userid", user?.id)
                .then(({ data: favoritesData, error }) => {
                     if (error) {
                          console.log(error)

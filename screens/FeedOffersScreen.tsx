@@ -7,11 +7,19 @@ import TopTabBar from "../components/TopTabBar"
 import { useAuth } from "../context/AuthContext"
 import { supabase } from "../lib/supabase"
 import { useEffect, useState } from "react"
+type User = {
+     id: string
+}
 
-const FeedOffersScreen = () => {
+type FeedOffersScreenProps = {
+     authenticated: User | null
+}
+const FeedOffersScreen = (props: FeedOffersScreenProps) => {
      const openAddOfferScreen = () => {
           RootNavigation.navigate("AddOffer", "")
      }
+
+     const user = props.authenticated
 
      type Offer = {
           id: string
@@ -20,6 +28,8 @@ const FeedOffersScreen = () => {
           price: string
           paiementFrequency: string
      }
+
+     // props type
 
      const [refreshing, setRefreshing] = useState(false)
      const [offers, setOffers] = useState<Offer[]>([])
@@ -56,7 +66,7 @@ const FeedOffersScreen = () => {
                          })}
                     </View>
                </ScrollView>
-               <AddOfferButton method={openAddOfferScreen} />
+               {user && <AddOfferButton method={openAddOfferScreen} />}
           </SafeAreaView>
      )
 }
