@@ -4,6 +4,7 @@ import Button from "../components/Button"
 import Link from "../components/Link"
 import ScrollView = Animated.ScrollView
 import { useState } from "react"
+import React from "react"
 
 type RegisterScreenProps = {}
 

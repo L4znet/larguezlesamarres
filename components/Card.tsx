@@ -1,6 +1,7 @@
 import { Text, StyleSheet, Image, TouchableOpacity, View } from "react-native"
 import * as RootNavigation from "../RootNavigation"
 import FavoriteButton from "./FavoriteButton"
+import React from "react"
 
 type CardProps = {
      id: string
@@ -15,10 +16,12 @@ const Card = (props: CardProps) => {
           RootNavigation.navigate("Offer", { id: id, title: props.title })
      }
 
+     const base64Image = "data:image/png;base64," + props.image
+
      return (
           <TouchableOpacity style={styles.card} onPress={() => goToOffer(props.id)}>
                <View style={styles.cardHeader}>
-                    <Image source={props.image} style={styles.image} resizeMode={"cover"} />
+                    <Image source={{ uri: base64Image }} style={styles.image} resizeMode={"cover"} />
                     <View style={styles.overlay}>
                          <FavoriteButton offerId={props.id} />
                          <Text style={styles.title}>{props.title}</Text>

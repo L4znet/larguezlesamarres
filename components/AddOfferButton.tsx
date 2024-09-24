@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, Text } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
-import * as RootNavigation from "../RootNavigation"
+import React from "react"
 
 type CircleButtonProps = {
      method: () => void

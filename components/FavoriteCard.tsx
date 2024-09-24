@@ -1,7 +1,5 @@
 import { View, Text, StyleSheet, Image, Pressable, Modal, TouchableOpacity } from "react-native"
-import { useState } from "react"
-import OfferDetailModal from "./OfferDetailModal"
-import DeleteConfirmModal from "./DeleteConfirmModal"
+import React from "react"
 
 type CardProps = {
      id: string

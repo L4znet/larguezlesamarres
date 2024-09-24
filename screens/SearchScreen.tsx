@@ -1,6 +1,7 @@
 import { View, Text } from "react-native"
 import Input from "../components/Input"
 import { useState } from "react"
+import React from "react"
 
 const SearchScreen = () => {
      const [search, setSearch] = useState("")

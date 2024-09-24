@@ -6,7 +6,7 @@ import { supabase } from "../lib/supabase"
 import { useCallback, useEffect, useState } from "react"
 import AddOfferButton from "../components/AddOfferButton"
 import TopTabBar from "../components/TopTabBar"
-import { useAuth } from "../context/AuthContext"
+import React from "react"
 
 type User = {
      id: string

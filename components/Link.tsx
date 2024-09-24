@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import * as RootNavigation from "../RootNavigation"
+import React from "react"
 type LinkProps = {
      label: string
      route: string

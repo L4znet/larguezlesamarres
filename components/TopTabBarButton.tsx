@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import { navigationRef } from "../RootNavigation"
 import { TabActions } from "@react-navigation/native"
+import React from "react"
 
 type TopTabBarButtonProps = {
      label: string

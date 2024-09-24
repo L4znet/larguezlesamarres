@@ -3,6 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome"
 import { useEffect, useState } from "react"
 import { Session } from "@supabase/supabase-js"
 import { supabase } from "../lib/supabase"
+import React from "react"
 type FavoriteButtonProps = {
      offerId: string
 }

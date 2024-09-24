@@ -2,6 +2,7 @@ import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "reac
 import AntDesignIcon from "react-native-vector-icons/AntDesign"
 import { useState } from "react"
 import * as RootNavigation from "../RootNavigation"
+import React from "react"
 
 type OfferDetailModalProps = {
      show: boolean

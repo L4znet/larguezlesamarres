@@ -1,4 +1,5 @@
 import { TextInput, StyleSheet } from "react-native"
+import React from "react"
 type InputProps = {
      placeholder: string
      onChangeText: (text: string) => void

@@ -7,6 +7,7 @@ import TopTabBar from "../components/TopTabBar"
 import { useAuth } from "../context/AuthContext"
 import { supabase } from "../lib/supabase"
 import { useEffect, useState } from "react"
+import React from "react"
 type User = {
      id: string
 }
@@ -26,7 +27,7 @@ const FeedOffersScreen = (props: FeedOffersScreenProps) => {
           title: string
           image: string
           price: string
-          paiementFrequency: string
+          payment_frequency: string
      }
 
      // props type
@@ -39,11 +40,10 @@ const FeedOffersScreen = (props: FeedOffersScreenProps) => {
      }, [offers])
 
      const getFeedOffers = async () => {
-          // TODO : Get the feed offers
-
           supabase
                .from("offers")
-               .select("id, title, price, image, paiementFrequency")
+               .select("id, title, price, image, payment_frequency, image")
+               .order("created_at", { ascending: false })
                .then(({ data: offersData, error }) => {
                     if (error) {
                          console.log(error)
@@ -62,7 +62,7 @@ const FeedOffersScreen = (props: FeedOffersScreenProps) => {
                     <TopTabBar />
                     <View style={styles.feed}>
                          {offers.map((offer) => {
-                              return <Card key={offer.id} id={offer.id} title={offer.title} price={offer.price} frequency={offer.paiementFrequency} image={require("../assets/images/bateau.jpg")} />
+                              return <Card key={offer.id} id={offer.id} title={offer.title} price={offer.price} frequency={offer.payment_frequency} image={offer.image} />
                          })}
                     </View>
                </ScrollView>

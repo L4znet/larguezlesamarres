@@ -1,5 +1,6 @@
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import AntDesignIcon from "react-native-vector-icons/AntDesign"
+import React from "react"
 
 type DeleteConfirmModalProps = {
      show: boolean

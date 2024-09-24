@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, StyleSheet, Text } from "react-native"
 import TabBarButton from "./TabBarButton"
-import { useEffect } from "react"
 import { useAuth } from "../context/AuthContext"
+import React from "react"
 
 const TabBar = () => {
      const { isAuthenticated } = useAuth()

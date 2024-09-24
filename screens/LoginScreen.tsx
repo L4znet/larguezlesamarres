@@ -4,6 +4,7 @@ import Button from "../components/Button"
 import Link from "../components/Link"
 import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
+import React from "react"
 
 const LoginScreen = () => {
      const [email, setEmail] = useState("")

@@ -2,6 +2,7 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import * as RootNavigation from "../RootNavigation"
 import { supabase } from "../lib/supabase"
+import React from "react"
 
 type TabBarButtonProps = {
      label: string

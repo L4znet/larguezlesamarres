@@ -8,6 +8,7 @@ import ProfileScreen from "./screens/ProfileScreen"
 import OfferScreen from "./screens/OfferScreen"
 import AddOfferScreen from "./screens/AddOfferScreen"
 import SearchScreen from "./screens/SearchScreen"
+import React from "react"
 
 const Navigation = () => {
      const Stack = createStackNavigator()

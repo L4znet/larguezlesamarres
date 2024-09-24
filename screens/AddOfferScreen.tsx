@@ -4,91 +4,133 @@ import Button from "../components/Button"
 import { useState } from "react"
 import ImagePickerScreen from "../components/ImagePicker"
 import { supabase } from "../lib/supabase"
-import { showMessage, hideMessage } from "react-native-flash-message"
+import { showMessage } from "react-native-flash-message"
 import * as RootNavigation from "../RootNavigation"
+import React from "react"
 
 const AddOfferScreen = () => {
-     const [title, setTitle] = useState("Ma super offre")
+     const [title, setTitle] = useState("")
      const [image, setImage] = useState("")
-     const [offerDescription, setOfferDescription] = useState("fdsffdqfdsdsqfsfqsfdqsf")
-     const [vehiculeType, setVehiculeType] = useState("Bateau à voile")
-     const [price, setPrice] = useState("100")
+     const [offerDescription, setOfferDescription] = useState("")
+     const [vehiculeType, setVehiculeType] = useState("")
+     const [price, setPrice] = useState("")
      const [isAvailable, setIsAvailable] = useState(true)
      const [isSkipperAvailable, setIsSkipperAvailable] = useState(true)
      const [isTeamAvailable, setIsTeamAvailable] = useState(false)
-     const [equipments, setEquipments] = useState("fdsmlkjfdsq")
-     const [locationTime, setLocationTime] = useState("Aujourd'hui")
-     const [location, setLocation] = useState("Nantes")
-     const [paiementFrequency, setPaiementFrequency] = useState("Par mois")
+     const [equipments, setEquipments] = useState("")
+     const [locationTime, setLocationTime] = useState("")
+     const [location, setLocation] = useState("")
+     const [paymentFrequency, setPaymentFrequency] = useState("")
+     const [errorMessages, setErrorMessages] = useState<{ [key: string]: string }>({})
 
      const handleImagePicked = (image: string) => {
           setImage(image)
      }
 
+     const validateFields = () => {
+          const errors: { [key: string]: string } = {}
+
+          if (!title) errors.title = "Le titre est requis"
+          if (!image) errors.image = "L'image est requise"
+          if (!offerDescription) errors.offerDescription = "La description est requise"
+          if (!vehiculeType) errors.vehiculeType = "Le type de véhicule est requis"
+          if (!price || isNaN(Number(price))) errors.price = "Le prix est requis et doit être un nombre"
+          if (!locationTime) errors.locationTime = "La durée de location est requise"
+          if (!location) errors.location = "Le lieu de location est requis"
+          if (!paymentFrequency) errors.paymentFrequency = "La fréquence de paiement est requise"
+
+          return errors
+     }
+
      const addOffer = async () => {
+          const errors = validateFields()
+          if (Object.keys(errors).length > 0) {
+               setErrorMessages(errors)
+               showMessage({
+                    message: "Il y a des champs vides ou incorrects",
+                    type: "danger",
+               })
+               return
+          }
+
           const { data, error } = await supabase.from("offers").insert([
                {
                     title: title,
+                    image: image,
                     description: offerDescription,
-                    image: image ? image : "../assets/images/placeHolder.png",
-                    vehiculeType: vehiculeType,
+                    vehicule_type: vehiculeType,
                     price: price,
-                    isAvailable: isAvailable,
-                    isSkipperAvailable: isSkipperAvailable,
-                    isTeamAvailable: isTeamAvailable,
                     equipments: equipments,
-                    locationTime: locationTime,
+                    location_time: locationTime,
                     location: location,
-                    paiementFrequency: paiementFrequency,
+                    payment_frequency: paymentFrequency,
+                    is_available: isAvailable,
+                    is_skipper_available: isSkipperAvailable,
+                    is_team_available: isTeamAvailable,
                },
           ])
 
           if (error) {
-               console.log(error)
-          } else {
-               showMessage({
-                    message: "Offre ajoutée avec succès",
-                    type: "success",
-               })
-
-               RootNavigation.goBack()
+               console.log("error", error)
+               return
           }
+
+          showMessage({
+               message: "Votre annonce a bien été ajoutée",
+               type: "success",
+          })
+
+          RootNavigation.navigate("FeedOffers", "")
      }
 
      return (
-          <>
-               <SafeAreaView style={styles.container}>
-                    <ScrollView>
-                         <View style={styles.container}>
-                              <ImagePickerScreen onImagePicked={handleImagePicked} />
-                              <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
+          <SafeAreaView style={styles.container}>
+               <ScrollView>
+                    <View style={styles.container}>
+                         <ImagePickerScreen onImagePicked={handleImagePicked} />
 
-                              <Input type={"textarea"} onChangeText={(offerDescription) => setOfferDescription(offerDescription)} value={offerDescription} placeholder={"Description de l'annonce"} />
-                              <Input type={"text"} onChangeText={(vehiculeType) => setVehiculeType(vehiculeType)} value={vehiculeType} placeholder={"Type de véhicule"} />
-                              <Input type={"number"} onChangeText={(price) => setPrice(price)} value={price} placeholder={"Prix"} />
-                              <Input type={"text"} onChangeText={(equipments) => setEquipments(equipments)} value={equipments} placeholder={"Equipements"} />
-                              <Input type={"text"} onChangeText={(locationTime) => setLocationTime(locationTime)} value={locationTime} placeholder={"Durée de location"} />
-                              <Input type={"text"} onChangeText={(location) => setLocation(location)} value={location} placeholder={"Lieu de location"} />
-                              <Input type={"text"} onChangeText={(paiementFrequency) => setPaiementFrequency(paiementFrequency)} value={paiementFrequency} placeholder={"Fréquence de paiement"} />
-                              <View style={styles.switchContainer}>
-                                   <Text>Disponible</Text>
-                                   <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsAvailable(!isAvailable)} value={isAvailable} />
-                              </View>
-                              <View style={styles.switchContainer}>
-                                   <Text>Equipage disponible</Text>
-                                   <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isTeamAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsTeamAvailable(!isTeamAvailable)} value={isTeamAvailable} />
-                              </View>
-                              <View style={styles.switchContainer}>
-                                   <Text>Pilote disponible</Text>
-                                   <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isSkipperAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsSkipperAvailable(!isSkipperAvailable)} value={isSkipperAvailable} />
-                              </View>
+                         {errorMessages.image && <Text style={styles.errorText}>{errorMessages.image}</Text>}
+                         <Input type={"text"} onChangeText={(title) => setTitle(title)} value={title} placeholder={"Titre de l'annonce"} />
+
+                         {errorMessages.title && <Text style={styles.errorText}>{errorMessages.title}</Text>}
+                         <Input type={"textarea"} onChangeText={(offerDescription) => setOfferDescription(offerDescription)} value={offerDescription} placeholder={"Description de l'annonce"} />
+
+                         {errorMessages.offerDescription && <Text style={styles.errorText}>{errorMessages.offerDescription}</Text>}
+                         <Input type={"text"} onChangeText={(vehiculeType) => setVehiculeType(vehiculeType)} value={vehiculeType} placeholder={"Type de véhicule"} />
+
+                         {errorMessages.vehiculeType && <Text style={styles.errorText}>{errorMessages.vehiculeType}</Text>}
+                         <Input type={"number"} onChangeText={(price) => setPrice(price)} value={price} placeholder={"Prix"} />
+
+                         {errorMessages.price && <Text style={styles.errorText}>{errorMessages.price}</Text>}
+                         <Input type={"text"} onChangeText={(equipments) => setEquipments(equipments)} value={equipments} placeholder={"Equipements"} />
+
+                         <Input type={"text"} onChangeText={(locationTime) => setLocationTime(locationTime)} value={locationTime} placeholder={"Durée de location"} />
+                         {errorMessages.locationTime && <Text style={styles.errorText}>{errorMessages.locationTime}</Text>}
+
+                         <Input type={"text"} onChangeText={(location) => setLocation(location)} value={location} placeholder={"Lieu de location"} />
+                         {errorMessages.location && <Text style={styles.errorText}>{errorMessages.location}</Text>}
+
+                         <Input type={"text"} onChangeText={(paymentFrequency) => setPaymentFrequency(paymentFrequency)} value={paymentFrequency} placeholder={"Fréquence de paiement"} />
+                         {errorMessages.paymentFrequency && <Text style={styles.errorText}>{errorMessages.paymentFrequency}</Text>}
+
+                         <View style={styles.switchContainer}>
+                              <Text>Disponible</Text>
+                              <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsAvailable(!isAvailable)} value={isAvailable} />
                          </View>
-                    </ScrollView>
-                    <View style={styles.addOfferContainer}>
-                         <Button label={"Ajouter l'annonce"} method={addOffer} />
+                         <View style={styles.switchContainer}>
+                              <Text>Equipage disponible</Text>
+                              <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isTeamAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsTeamAvailable(!isTeamAvailable)} value={isTeamAvailable} />
+                         </View>
+                         <View style={styles.switchContainer}>
+                              <Text>Pilote disponible</Text>
+                              <Switch trackColor={{ false: "#767577", true: "#fd5353" }} thumbColor={isSkipperAvailable ? "#ffffff" : "#f4f3f4"} onValueChange={() => setIsSkipperAvailable(!isSkipperAvailable)} value={isSkipperAvailable} />
+                         </View>
                     </View>
-               </SafeAreaView>
-          </>
+               </ScrollView>
+               <View style={styles.addOfferContainer}>
+                    <Button label={"Ajouter l'annonce"} method={addOffer} />
+               </View>
+          </SafeAreaView>
      )
 }
 
@@ -96,11 +138,6 @@ const styles = StyleSheet.create({
      container: {
           flex: 1,
           alignItems: "center",
-     },
-
-     h1: {
-          fontSize: 30,
-          fontWeight: "bold",
      },
      addOfferContainer: {
           width: "100%",
@@ -112,6 +149,10 @@ const styles = StyleSheet.create({
           justifyContent: "space-between",
           width: "80%",
           marginVertical: 10,
+     },
+     errorText: {
+          color: "red",
+          marginBottom: 5,
      },
 })
 

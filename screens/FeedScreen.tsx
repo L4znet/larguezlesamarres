@@ -3,7 +3,7 @@ import FeedOffersScreen from "./FeedOffersScreen"
 import OwnOffersScreen from "./OwnOffersScreen"
 import OwnFavoritesScreen from "./OwnFavoritesScreen"
 import { useAuth } from "../context/AuthContext"
-import TopTabBar from "../components/TopTabBar"
+import React from "react"
 
 const FeedScreen = () => {
      const Tab = createMaterialTopTabNavigator()

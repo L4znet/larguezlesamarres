@@ -6,6 +6,7 @@ import * as RootNavigation from "../RootNavigation"
 import AddOfferButton from "../components/AddOfferButton"
 import { useAuth } from "../context/AuthContext"
 import TopTabBar from "../components/TopTabBar"
+import React from "react"
 
 type User = {
      id: string

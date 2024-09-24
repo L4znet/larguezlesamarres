@@ -4,6 +4,7 @@ import Input from "./Input"
 import { useState } from "react"
 import * as RootNavigation from "../RootNavigation"
 import { useAuth } from "../context/AuthContext"
+import React from "react"
 
 const TopTabBar = () => {
      const { user } = useAuth()
