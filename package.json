@@ -45,7 +45,8 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "react-native-dotenv": "^3.4.11",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "metro-react-native-babel-preset": "^0.66.2"
   },
   "private": true
 }
